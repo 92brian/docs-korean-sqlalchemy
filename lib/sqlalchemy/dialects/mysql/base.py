@@ -525,6 +525,19 @@ http://dev.mysql.com/doc/refman/5.0/en/create-index.html
 
 http://dev.mysql.com/doc/refman/5.0/en/create-table.html
 
+Index Parsers
+~~~~~~~~~~~~~
+
+CREATE FULLTEXT INDEX in MySQL also supports a "WITH PARSER" option.  This
+is available using the keyword argument ``mysql_with_parser``::
+
+    Index(
+        'my_index', my_table.c.data,
+        mysql_prefix='FULLTEXT', mysql_with_parser="ngram")
+
+.. versionadded:: 1.3
+
+
 .. _mysql_foreign_keys:
 
 MySQL Foreign Keys
@@ -1276,6 +1289,10 @@ class MySQLDDLCompiler(compiler.DDLCompiler):
             columns = ', '.join(columns)
         text += '(%s)' % columns
 
+        parser = index.dialect_options['mysql']['with_parser']
+        if parser is not None:
+            text += " WITH PARSER %s" % (parser, )
+
         using = index.dialect_options['mysql']['using']
         if using is not None:
             text += " USING %s" % (preparer.quote(using))
@@ -1693,6 +1710,7 @@ class MySQLDialect(default.DefaultDialect):
             "using": None,
             "length": None,
             "prefix": None,
+            "with_parser": None
         })
     ]
 
@@ -1749,6 +1767,27 @@ class MySQLDialect(default.DefaultDialect):
         if util.py3k and isinstance(val, bytes):
             val = val.decode()
         return val.upper().replace("-", " ")
+
+    def _get_server_version_info(self, connection):
+        # get database server version info explicitly over the wire
+        # to avoid proxy servers like MaxScale getting in the
+        # way with their own values, see #4205
+        dbapi_con = connection.connection
+        cursor = dbapi_con.cursor()
+        cursor.execute("SELECT VERSION()")
+        val = cursor.fetchone()[0]
+        cursor.close()
+        if util.py3k and isinstance(val, bytes):
+            val = val.decode()
+
+        version = []
+        r = re.compile(r'[.\-]')
+        for n in r.split(val):
+            try:
+                version.append(int(n))
+            except ValueError:
+                version.append(n)
+        return tuple(version)
 
     def do_commit(self, dbapi_connection):
         """Execute a COMMIT."""
@@ -1921,6 +1960,9 @@ class MySQLDialect(default.DefaultDialect):
 
     @property
     def _mariadb_normalized_version_info(self):
+        # MariaDB's wire-protocol prepends the server_version with
+        # the string "5.5"; now that we use @@version we no longer see this.
+
         if self._is_mariadb:
             idx = self.server_version_info.index('MariaDB')
             return self.server_version_info[idx - 3: idx]
@@ -2066,20 +2108,31 @@ class MySQLDialect(default.DefaultDialect):
             connection, table_name, schema, **kw)
 
         indexes = []
+
         for spec in parsed_state.keys:
+            dialect_options = {}
             unique = False
             flavor = spec['type']
             if flavor == 'PRIMARY':
                 continue
             if flavor == 'UNIQUE':
                 unique = True
-            elif flavor in (None, 'FULLTEXT', 'SPATIAL'):
+            elif flavor in ('FULLTEXT', 'SPATIAL'):
+                dialect_options["mysql_prefix"] = flavor
+            elif flavor is None:
                 pass
             else:
                 self.logger.info(
                     "Converting unknown KEY type %s to a plain KEY", flavor)
                 pass
+
+            if spec['parser']:
+                dialect_options['mysql_with_parser'] = spec['parser']
+
             index_d = {}
+            if dialect_options:
+                index_d["dialect_options"] = dialect_options
+
             index_d['name'] = spec['name']
             index_d['column_names'] = [s[0] for s in spec['columns']]
             index_d['unique'] = unique

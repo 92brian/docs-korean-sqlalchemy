@@ -70,6 +70,7 @@ class Query(object):
 
     """
 
+    _only_return_tuples = False
     _enable_eagerloads = True
     _enable_assertions = True
     _with_labels = False
@@ -92,6 +93,7 @@ class Query(object):
     _autoflush = True
     _only_load_props = None
     _refresh_state = None
+    _refresh_identity_token = None
     _from_obj = ()
     _join_entities = ()
     _select_from_entity = None
@@ -109,6 +111,18 @@ class Query(object):
     _orm_only_from_obj_alias = True
     _current_path = _path_registry
     _has_mapper_entities = False
+
+    lazy_loaded_from = None
+    """An :class:`.InstanceState` that is using this :class:`.Query` for a
+    lazy load operation.
+
+    This can be used for extensions like the horizontal sharding extension
+    as well as event handlers and custom mapper options to determine
+    when a query is being used to lazy load a relationship on an object.
+
+    .. versionadded:: 1.2.9
+
+    """
 
     def __init__(self, entities, session=None):
         """Construct a :class:`.Query` directly.
@@ -145,10 +159,31 @@ class Query(object):
         self._entities = []
         self._primary_entity = None
         self._has_mapper_entities = False
-        for ent in util.to_list(entities):
-            entity_wrapper(self, ent)
 
-        self._set_entity_selectables(self._entities)
+        # 1. don't run util.to_list() or _set_entity_selectables
+        #    if no entities were passed - major performance bottleneck
+        #    from lazy loader implementation when it seeks to use Query
+        #    class for an identity lookup, causes test_orm.py to fail
+        #    with thousands of extra function calls, see issue #4228
+        #    for why this use had to be added
+        # 2. can't use classmethod on Query because session.query_cls
+        #    is an arbitrary callable in some user recipes, not
+        #    necessarily a class, so we don't have the class available.
+        #    see issue #4256
+        # 3. can't do "if entities is not None" because we usually get here
+        #    from session.query() which takes in *entities.
+        # 4. can't do "if entities" because users make use of undocumented
+        #    to_list() behavior here and they pass clause expressions that
+        #    can't be evaluated as boolean.  See issue #4269.
+        # 5. the empty tuple is a singleton in cPython, take advantage of this
+        #    so that we can skip for the empty "*entities" case without using
+        #    any Python overloadable operators.
+        #
+        if entities is not ():
+            for ent in util.to_list(entities):
+                entity_wrapper(self, ent)
+
+            self._set_entity_selectables(self._entities)
 
     def _set_entity_selectables(self, entities):
         self._mapper_adapter_map = d = self._mapper_adapter_map.copy()
@@ -256,6 +291,10 @@ class Query(object):
                 True, True)
             for o in cols
         ]
+
+    @_generative()
+    def _set_lazyload_from(self, state):
+        self.lazy_loaded_from = state
 
     @_generative()
     def _adapt_all_clauses(self):
@@ -438,7 +477,8 @@ class Query(object):
     def _get_options(self, populate_existing=None,
                      version_check=None,
                      only_load_props=None,
-                     refresh_state=None):
+                     refresh_state=None,
+                     identity_token=None):
         if populate_existing:
             self._populate_existing = populate_existing
         if version_check:
@@ -447,6 +487,8 @@ class Query(object):
             self._refresh_state = refresh_state
         if only_load_props:
             self._only_load_props = set(only_load_props)
+        if identity_token:
+            self._refresh_identity_token = identity_token
         return self
 
     def _clone(self):
@@ -602,6 +644,16 @@ class Query(object):
 
     def __clause_element__(self):
         return self.enable_eagerloads(False).with_labels().statement
+
+    @_generative()
+    def only_return_tuples(self, value):
+        """When set to True, the query results will always be a tuple,
+        specifically for single element queries. The default is False.
+
+    .   .. versionadded:: 1.2.5
+
+        """
+        self._only_return_tuples = value
 
     @_generative()
     def enable_eagerloads(self, value):
@@ -868,32 +920,81 @@ class Query(object):
 
         """
         return self._get_impl(
-            ident, loading.load_on_ident)
+            ident, loading.load_on_pk_identity)
 
-    def _get_impl(self, ident, fallback_fn, identity_token=None):
+    def _identity_lookup(self, mapper, primary_key_identity,
+                         identity_token=None, passive=attributes.PASSIVE_OFF,
+                         lazy_loaded_from=None):
+        """Locate an object in the identity map.
+
+        Given a primary key identity, constructs an identity key and then
+        looks in the session's identity map.  If present, the object may
+        be run through unexpiration rules (e.g. load unloaded attributes,
+        check if was deleted).
+
+        For performance reasons, while the :class:`.Query` must be
+        instantiated, it may be instantiated with no entities, and the
+        mapper is passed::
+
+            obj = session.query()._identity_lookup(inspect(SomeClass), (1, ))
+
+        :param mapper: mapper in use
+        :param primary_key_identity: the primary key we are searching for, as
+         a tuple.
+        :param identity_token: identity token that should be used to create
+         the identity key.  Used as is, however overriding subclasses can
+         repurpose this in order to interpret the value in a special way,
+         such as if None then look among multple target tokens.
+        :param passive: passive load flag passed to
+         :func:`.loading.get_from_identity`, which impacts the behavior if
+         the object is found; the object may be validated and/or unexpired
+         if the flag allows for SQL to be emitted.
+        :param lazy_loaded_from: an :class:`.InstanceState` that is
+         specifically asking for this identity as a related identity.  Used
+         for sharding schemes where there is a correspondence between an object
+         and a related object being lazy-loaded (or otherwise
+         relationship-loaded).
+
+         .. versionadded:: 1.2.9
+
+        :return: None if the object is not found in the identity map, *or*
+         if the object was unexpired and found to have been deleted.
+         if passive flags disallow SQL and the object is expired, returns
+         PASSIVE_NO_RESULT.   In all other cases the instance is returned.
+
+        .. versionadded:: 1.2.7
+
+        """
+
+        key = mapper.identity_key_from_primary_key(
+            primary_key_identity, identity_token=identity_token)
+        return loading.get_from_identity(
+            self.session, key, passive)
+
+    def _get_impl(
+            self, primary_key_identity, db_load_fn, identity_token=None):
         # convert composite types to individual args
-        if hasattr(ident, '__composite_values__'):
-            ident = ident.__composite_values__()
+        if hasattr(primary_key_identity, '__composite_values__'):
+            primary_key_identity = primary_key_identity.__composite_values__()
 
-        ident = util.to_list(ident)
+        primary_key_identity = util.to_list(primary_key_identity)
 
         mapper = self._only_full_mapper_zero("get")
 
-        if len(ident) != len(mapper.primary_key):
+        if len(primary_key_identity) != len(mapper.primary_key):
             raise sa_exc.InvalidRequestError(
                 "Incorrect number of values in identifier to formulate "
                 "primary key for query.get(); primary key columns are %s" %
                 ','.join("'%s'" % c for c in mapper.primary_key))
 
-        key = mapper.identity_key_from_primary_key(
-            ident, identity_token=identity_token)
-
         if not self._populate_existing and \
                 not mapper.always_refresh and \
                 self._for_update_arg is None:
 
-            instance = loading.get_from_identity(
-                self.session, key, attributes.PASSIVE_OFF)
+            instance = self._identity_lookup(
+                mapper, primary_key_identity,
+                identity_token=identity_token)
+
             if instance is not None:
                 self._get_existing_condition()
                 # reject calls for id in identity map but class
@@ -902,7 +1003,7 @@ class Query(object):
                     return None
                 return instance
 
-        return fallback_fn(self, key)
+        return db_load_fn(self, primary_key_identity)
 
     @_generative()
     def correlate(self, *args):
@@ -2633,7 +2734,7 @@ class Query(object):
         self._offset = offset
 
     @_generative(_no_statement_condition)
-    def distinct(self, *criterion):
+    def distinct(self, *expr):
         r"""Apply a ``DISTINCT`` to the query and return the newly resulting
         ``Query``.
 
@@ -2651,18 +2752,18 @@ class Query(object):
             :attr:`.Query.statement` accessor, however.
 
         :param \*expr: optional column expressions.  When present,
-         the PostgreSQL dialect will render a ``DISTINCT ON (<expressions>>)``
+         the PostgreSQL dialect will render a ``DISTINCT ON (<expressions>)``
          construct.
 
         """
-        if not criterion:
+        if not expr:
             self._distinct = True
         else:
-            criterion = self._adapt_col_list(criterion)
+            expr = self._adapt_col_list(expr)
             if isinstance(self._distinct, list):
-                self._distinct += criterion
+                self._distinct += expr
             else:
-                self._distinct = criterion
+                self._distinct = expr
 
     @_generative()
     def prefix_with(self, *prefixes):
@@ -3446,6 +3547,9 @@ class Query(object):
             order_by=context.order_by,
             **self._select_args
         )
+        # put FOR UPDATE on the inner query, where MySQL will honor it,
+        # as well as if it has an OF so Postgresql can use it.
+        inner._for_update_arg = context._for_update_arg
 
         for hint in self._with_hints:
             inner = inner.with_hint(*hint)
@@ -3463,7 +3567,13 @@ class Query(object):
             [inner] + context.secondary_columns,
             use_labels=context.labels)
 
-        statement._for_update_arg = context._for_update_arg
+        # Oracle however does not allow FOR UPDATE on the subquery,
+        # and the Oracle dialect ignores it, plus for Postgresql, MySQL
+        # we expect that all elements of the row are locked, so also put it
+        # on the outside (except in the case of PG when OF is used)
+        if context._for_update_arg is not None and \
+                context._for_update_arg.of is None:
+            statement._for_update_arg = context._for_update_arg
 
         from_clause = inner
         for eager_join in context.eager_joins.values():
@@ -3531,12 +3641,14 @@ class Query(object):
         """
 
         search = set(self._mapper_adapter_map.values())
-        if self._select_from_entity:
-            # based on the behavior in _set_select_from,
-            # when we have self._select_from_entity, we don't
-            # have  _from_obj_alias.
-            # assert self._from_obj_alias is None
-            search = search.union([(self._select_from_entity, None)])
+        if self._select_from_entity and \
+                self._select_from_entity not in self._mapper_adapter_map:
+            insp = inspect(self._select_from_entity)
+            if insp.is_aliased_class:
+                adapter = insp._adapter
+            else:
+                adapter = None
+            search = search.union([(self._select_from_entity, adapter)])
 
         for (ext_info, adapter) in search:
             if ext_info in self._join_entities:
@@ -4170,7 +4282,10 @@ class QueryContext(object):
         self.propagate_options = set(o for o in query._with_options if
                                      o.propagate_to_loaders)
         self.attributes = query._attributes.copy()
-        self.identity_token = None
+        if self.refresh_state is not None:
+            self.identity_token = query._refresh_identity_token
+        else:
+            self.identity_token = None
 
 
 class AliasOption(interfaces.MapperOption):

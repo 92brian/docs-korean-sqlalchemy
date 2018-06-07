@@ -47,6 +47,28 @@ class MiscTest(QueryTest):
         assert q1.session is s1
 
 
+class OnlyReturnTuplesTest(QueryTest):
+    def test_single_entity_false(self):
+        User = self.classes.User
+        row = create_session().query(User).only_return_tuples(False).first()
+        assert isinstance(row, User)
+
+    def test_single_entity_true(self):
+        User = self.classes.User
+        row = create_session().query(User).only_return_tuples(True).first()
+        assert isinstance(row, tuple)
+
+    def test_multiple_entity_false(self):
+        User = self.classes.User
+        row = create_session().query(User.id, User).only_return_tuples(False).first()
+        assert isinstance(row, tuple)
+
+    def test_multiple_entity_true(self):
+        User = self.classes.User
+        row = create_session().query(User.id, User).only_return_tuples(True).first()
+        assert isinstance(row, tuple)
+
+
 class RowTupleTest(QueryTest):
     run_setup_mappers = None
 
@@ -4501,3 +4523,125 @@ class SessionBindTest(QueryTest):
 
         with self._assert_bind_args(session):
             session.query(func.max(User.score)).scalar()
+
+
+class QueryClsTest(QueryTest):
+    def _fn_fixture(self):
+        def query(*arg, **kw):
+            return Query(*arg, **kw)
+        return query
+
+    def _subclass_fixture(self):
+        class MyQuery(Query):
+            pass
+
+        return MyQuery
+
+    def _callable_fixture(self):
+        class MyQueryFactory(object):
+            def __call__(self, *arg, **kw):
+                return Query(*arg, **kw)
+
+        return MyQueryFactory()
+
+    def _plain_fixture(self):
+        return Query
+
+    def _test_get(self, fixture):
+        User = self.classes.User
+
+        s = Session(query_cls=fixture())
+
+        assert s.query(User).get(19) is None
+        u = s.query(User).get(7)
+        u2 = s.query(User).get(7)
+        assert u is u2
+
+    def _test_o2m_lazyload(self, fixture):
+        User, Address = self.classes('User', 'Address')
+
+        s = Session(query_cls=fixture())
+
+        u1 = s.query(User).filter(User.id == 7).first()
+        eq_(u1.addresses, [Address(id=1)])
+
+    def _test_m2o_lazyload(self, fixture):
+        User, Address = self.classes('User', 'Address')
+
+        s = Session(query_cls=fixture())
+
+        a1 = s.query(Address).filter(Address.id == 1).first()
+        eq_(a1.user, User(id=7))
+
+    def _test_expr(self, fixture):
+        User, Address = self.classes('User', 'Address')
+
+        s = Session(query_cls=fixture())
+
+        q = s.query(func.max(User.id).label('max'))
+        eq_(q.scalar(), 10)
+
+    def _test_expr_undocumented_query_constructor(self, fixture):
+        # see #4269.  not documented but already out there.
+        User, Address = self.classes('User', 'Address')
+
+        s = Session(query_cls=fixture())
+
+        q = Query(func.max(User.id).label('max')).with_session(s)
+        eq_(q.scalar(), 10)
+
+    def test_plain_get(self):
+        self._test_get(self._plain_fixture)
+
+    def test_callable_get(self):
+        self._test_get(self._callable_fixture)
+
+    def test_subclass_get(self):
+        self._test_get(self._subclass_fixture)
+
+    def test_fn_get(self):
+        self._test_get(self._fn_fixture)
+
+    def test_plain_expr(self):
+        self._test_expr(self._plain_fixture)
+
+    def test_callable_expr(self):
+        self._test_expr(self._callable_fixture)
+
+    def test_subclass_expr(self):
+        self._test_expr(self._subclass_fixture)
+
+    def test_fn_expr(self):
+        self._test_expr(self._fn_fixture)
+
+    def test_plain_expr_undocumented_query_constructor(self):
+        self._test_expr_undocumented_query_constructor(self._plain_fixture)
+
+    def test_callable_expr_undocumented_query_constructor(self):
+        self._test_expr_undocumented_query_constructor(
+                self._callable_fixture)
+
+    def test_subclass_expr_undocumented_query_constructor(self):
+        self._test_expr_undocumented_query_constructor(
+            self._subclass_fixture)
+
+    def test_fn_expr_undocumented_query_constructor(self):
+        self._test_expr_undocumented_query_constructor(self._fn_fixture)
+
+    def test_callable_o2m_lazyload(self):
+        self._test_o2m_lazyload(self._callable_fixture)
+
+    def test_subclass_o2m_lazyload(self):
+        self._test_o2m_lazyload(self._subclass_fixture)
+
+    def test_fn_o2m_lazyload(self):
+        self._test_o2m_lazyload(self._fn_fixture)
+
+    def test_callable_m2o_lazyload(self):
+        self._test_m2o_lazyload(self._callable_fixture)
+
+    def test_subclass_m2o_lazyload(self):
+        self._test_m2o_lazyload(self._subclass_fixture)
+
+    def test_fn_m2o_lazyload(self):
+        self._test_m2o_lazyload(self._fn_fixture)
