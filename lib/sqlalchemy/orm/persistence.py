@@ -1127,7 +1127,8 @@ def _finalize_insert_update_commands(base_mapper, uowtransaction, states):
         else:
             mapper.dispatch.after_update(mapper, connection, state)
 
-        if mapper.version_id_col is not None:
+        if mapper.version_id_generator is False and \
+                mapper.version_id_col is not None:
             if state_dict[mapper._version_id_prop.key] is None:
                 raise orm_exc.FlushError(
                     "Instance does not contain a non-NULL version value")
@@ -1272,8 +1273,14 @@ def _sort_states(states):
     pending = set(states)
     persistent = set(s for s in pending if s.key is not None)
     pending.difference_update(persistent)
+    try:
+        persistent_sorted = sorted(persistent, key=lambda q: q.key[1])
+    except TypeError as err:
+        raise sa_exc.InvalidRequestError(
+            "Could not sort objects by primary key; primary key "
+            "values must be sortable in Python (was: %s)" % err)
     return sorted(pending, key=operator.attrgetter("insert_order")) + \
-        sorted(persistent, key=lambda q: q.key[1])
+        persistent_sorted
 
 
 class BulkUD(object):

@@ -50,13 +50,13 @@ Version Check
 =============
 
 
-A quick check to verify that we are on at least **version 1.2** of SQLAlchemy:
+A quick check to verify that we are on at least **version 1.3** of SQLAlchemy:
 
 .. sourcecode:: pycon+sql
 
     >>> import sqlalchemy
     >>> sqlalchemy.__version__  # doctest: +SKIP
-    1.2.0
+    1.3.0
 
 Connecting
 ==========
@@ -821,7 +821,7 @@ using the :meth:`.TextClause.bindparams` method::
 
 The parameters can also be explicitly typed::
 
-    stmt = stmt.bindparams(bindparam("x", String), bindparam("y", String))
+    stmt = stmt.bindparams(bindparam("x", type_=String), bindparam("y", type_=String))
     result = conn.execute(stmt, {"x": "m", "y": "z"})
 
 Typing for bound parameters is necessary when the type requires Python-side

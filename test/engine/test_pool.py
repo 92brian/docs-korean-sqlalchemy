@@ -7,6 +7,7 @@ from sqlalchemy.testing.util import gc_collect, lazy_gc
 from sqlalchemy.testing import eq_, assert_raises, is_not_, is_
 from sqlalchemy.testing.engines import testing_engine
 from sqlalchemy.testing import fixtures
+from sqlalchemy.testing import assert_raises_message
 import random
 from sqlalchemy.testing.mock import Mock, call, patch, ANY
 import weakref
@@ -729,6 +730,35 @@ class PoolEventsTest(PoolTestBase):
         eq_(canary, ["listen_one", "listen_two"])
         p2.connect()
         eq_(canary, ["listen_one", "listen_two", "listen_one", "listen_three"])
+
+    def test_connect_event_fails_invalidates(self):
+        fail = False
+
+        def listen_one(conn, rec):
+            if fail:
+                raise Exception("it failed")
+
+        def listen_two(conn, rec):
+            rec.info['important_flag'] = True
+
+        p1 = pool.QueuePool(
+            creator=MockDBAPI().connect, pool_size=1, max_overflow=0)
+        event.listen(p1, 'connect', listen_one)
+        event.listen(p1, 'connect', listen_two)
+
+        conn = p1.connect()
+        eq_(conn.info['important_flag'], True)
+        conn.invalidate()
+        conn.close()
+
+        fail = True
+        assert_raises(Exception, p1.connect)
+
+        fail = False
+
+        conn = p1.connect()
+        eq_(conn.info['important_flag'], True)
+        conn.close()
 
     def teardown(self):
         # TODO: need to get remove() functionality
@@ -1758,6 +1788,40 @@ class QueuePoolTest(PoolTestBase):
 
         self._assert_cleanup_on_pooled_reconnect(dbapi, p)
 
+    @testing.requires.predictable_gc
+    def test_userspace_disconnectionerror_weakref_finalizer(self):
+        dbapi, pool = self._queuepool_dbapi_fixture(
+            pool_size=1,
+            max_overflow=2)
+
+        @event.listens_for(pool, "checkout")
+        def handle_checkout_event(dbapi_con, con_record, con_proxy):
+            if getattr(dbapi_con, 'boom') == 'yes':
+                raise tsa.exc.DisconnectionError()
+
+        conn = pool.connect()
+        old_dbapi_conn = conn.connection
+        conn.close()
+
+        eq_(old_dbapi_conn.mock_calls, [call.rollback()])
+
+        old_dbapi_conn.boom = 'yes'
+
+        conn = pool.connect()
+        dbapi_conn = conn.connection
+        del conn
+        gc_collect()
+
+        # new connection was reset on return appropriately
+        eq_(dbapi_conn.mock_calls, [call.rollback()])
+
+        # old connection was just closed - did not get an
+        # erroneous reset on return
+        eq_(
+            old_dbapi_conn.mock_calls,
+            [call.rollback(), call.close()]
+        )
+
     @testing.requires.timing_intensive
     def test_recycle_pool_no_race(self):
         def slow_close():
@@ -1907,6 +1971,18 @@ class QueuePoolTest(PoolTestBase):
         c2 = p.connect()
         assert c2.connection is not None
 
+    def test_no_double_checkin(self):
+        p = self._queuepool_fixture(pool_size=1)
+
+        c1 = p.connect()
+        rec = c1._connection_record
+        c1.close()
+        assert_raises_message(
+            Warning,
+            "Double checkin attempted on %s" % rec,
+            rec.checkin
+        )
+
 
 class ResetOnReturnTest(PoolTestBase):
     def _fixture(self, **kw):
@@ -1999,6 +2075,27 @@ class ResetOnReturnTest(PoolTestBase):
         eq_(dbapi.connect().special_commit.call_count, 1)
         assert not dbapi.connect().rollback.called
         assert dbapi.connect().commit.called
+
+    def test_reset_agent_disconnect(self):
+        dbapi, p = self._fixture(reset_on_return='rollback')
+
+        class Agent(object):
+            def __init__(self, conn):
+                self.conn = conn
+
+            def rollback(self):
+                p._invalidate(self.conn)
+                raise Exception("hi")
+
+            def commit(self):
+                self.conn.commit()
+
+        c1 = p.connect()
+        c1._reset_agent = Agent(c1)
+        c1.close()
+
+        # no warning raised.  We know it would warn due to
+        # QueuePoolTest.test_no_double_checkin
 
 
 class SingletonThreadPoolTest(PoolTestBase):

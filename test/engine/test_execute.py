@@ -1,12 +1,15 @@
 # coding: utf-8
 
+import weakref
 from sqlalchemy.testing import eq_, assert_raises, assert_raises_message, \
     config, is_, is_not_, le_, expect_warnings
 import re
 from sqlalchemy.testing.util import picklers
+from sqlalchemy.testing.util import gc_collect
 from sqlalchemy.interfaces import ConnectionProxy
 from sqlalchemy import MetaData, Integer, String, INT, VARCHAR, func, \
-    bindparam, select, event, TypeDecorator, create_engine, Sequence
+    bindparam, select, event, TypeDecorator, create_engine, Sequence, \
+    LargeBinary
 from sqlalchemy.sql import column, literal
 from sqlalchemy.testing.schema import Table, Column
 import sqlalchemy as tsa
@@ -42,7 +45,7 @@ class ExecuteTest(fixtures.TestBase):
         users = Table(
             'users', metadata,
             Column('user_id', INT, primary_key=True, autoincrement=False),
-            Column('user_name', VARCHAR(20)),
+            Column('user_name', VARCHAR(20))
         )
         users_autoinc = Table(
             'users_autoinc', metadata,
@@ -511,57 +514,6 @@ class ExecuteTest(fixtures.TestBase):
         is_(eng.pool, eng2.pool)
 
     @testing.requires.ad_hoc_engines
-    def test_generative_engine_event_dispatch(self):
-        canary = []
-
-        def l1(*arg, **kw):
-            canary.append("l1")
-
-        def l2(*arg, **kw):
-            canary.append("l2")
-
-        def l3(*arg, **kw):
-            canary.append("l3")
-
-        eng = engines.testing_engine(options={'execution_options':
-                                              {'base': 'x1'}})
-        event.listen(eng, "before_execute", l1)
-
-        eng1 = eng.execution_options(foo="b1")
-        event.listen(eng, "before_execute", l2)
-        event.listen(eng1, "before_execute", l3)
-
-        eng.execute(select([1])).close()
-        eng1.execute(select([1])).close()
-
-        eq_(canary, ["l1", "l2", "l3", "l1", "l2"])
-
-    @testing.requires.ad_hoc_engines
-    def test_dispose_event(self):
-        canary = Mock()
-        eng = create_engine(testing.db.url)
-        event.listen(eng, "engine_disposed", canary)
-
-        conn = eng.connect()
-        conn.close()
-        eng.dispose()
-
-        conn = eng.connect()
-        conn.close()
-
-        eq_(
-            canary.mock_calls,
-            [call(eng)]
-        )
-
-        eng.dispose()
-
-        eq_(
-            canary.mock_calls,
-            [call(eng), call(eng)]
-        )
-
-    @testing.requires.ad_hoc_engines
     def test_autocommit_option_no_issue_first_connect(self):
         eng = create_engine(testing.db.url)
         eng.update_execution_options(autocommit=True)
@@ -820,6 +772,49 @@ class CompiledCacheTest(fixtures.TestBase):
         eq_(compile_mock.call_count, 1)
         assert len(cache) == 1
         eq_(conn.execute("select count(*) from users").scalar(), 3)
+
+    @testing.only_on(["sqlite", "mysql", "postgresql"],
+                     "uses blob value that is problematic for some DBAPIs")
+    @testing.provide_metadata
+    def test_cache_noleak_on_statement_values(self):
+        # This is a non regression test for an object reference leak caused
+        # by the compiled_cache.
+
+        metadata = self.metadata
+        photo = Table(
+            'photo', metadata,
+            Column('id', Integer, primary_key=True,
+                   test_needs_autoincrement=True),
+            Column('photo_blob', LargeBinary()),
+        )
+        metadata.create_all()
+
+        conn = testing.db.connect()
+        cache = {}
+        cached_conn = conn.execution_options(compiled_cache=cache)
+
+        class PhotoBlob(bytearray):
+            pass
+
+        blob = PhotoBlob(100)
+        ref_blob = weakref.ref(blob)
+
+        ins = photo.insert()
+        with patch.object(
+            ins, "compile",
+                Mock(side_effect=ins.compile)) as compile_mock:
+            cached_conn.execute(ins, {'photo_blob': blob})
+        eq_(compile_mock.call_count, 1)
+        eq_(len(cache), 1)
+        eq_(conn.execute("select count(*) from photo").scalar(), 1)
+
+        del blob
+
+        gc_collect()
+
+        # The compiled statement cache should not hold any reference to the
+        # the statement values (only the keys).
+        eq_(ref_blob(), None)
 
     def test_keys_independent_of_ordering(self):
         conn = testing.db.connect()
@@ -1387,6 +1382,117 @@ class EngineEventsTest(fixtures.TestBase):
         eq_(c3._execution_options, {'foo': 'bar', 'bar': 'bat'})
         eq_(canary, ['execute', 'cursor_execute'])
 
+    @testing.requires.ad_hoc_engines
+    def test_generative_engine_event_dispatch(self):
+        canary = []
+
+        def l1(*arg, **kw):
+            canary.append("l1")
+
+        def l2(*arg, **kw):
+            canary.append("l2")
+
+        def l3(*arg, **kw):
+            canary.append("l3")
+
+        eng = engines.testing_engine(options={'execution_options':
+                                              {'base': 'x1'}})
+        event.listen(eng, "before_execute", l1)
+
+        eng1 = eng.execution_options(foo="b1")
+        event.listen(eng, "before_execute", l2)
+        event.listen(eng1, "before_execute", l3)
+
+        eng.execute(select([1])).close()
+
+        eq_(canary, ["l1", "l2"])
+
+        eng1.execute(select([1])).close()
+
+        eq_(canary, ["l1", "l2", "l3", "l1", "l2"])
+
+    @testing.requires.ad_hoc_engines
+    def test_clslevel_engine_event_options(self):
+        canary = []
+
+        def l1(*arg, **kw):
+            canary.append("l1")
+
+        def l2(*arg, **kw):
+            canary.append("l2")
+
+        def l3(*arg, **kw):
+            canary.append("l3")
+
+        def l4(*arg, **kw):
+            canary.append("l4")
+
+        event.listen(Engine, "before_execute", l1)
+
+        eng = engines.testing_engine(options={'execution_options':
+                                              {'base': 'x1'}})
+        event.listen(eng, "before_execute", l2)
+
+        eng1 = eng.execution_options(foo="b1")
+        event.listen(eng, "before_execute", l3)
+        event.listen(eng1, "before_execute", l4)
+
+        eng.execute(select([1])).close()
+
+        eq_(canary, ["l1", "l2", "l3"])
+
+        eng1.execute(select([1])).close()
+
+        eq_(canary, ["l1", "l2", "l3", "l4", "l1", "l2", "l3"])
+
+        canary[:] = []
+
+        event.remove(Engine, "before_execute", l1)
+        event.remove(eng1, "before_execute", l4)
+        event.remove(eng, "before_execute", l3)
+
+        eng1.execute(select([1])).close()
+        eq_(canary, ["l2"])
+
+    @testing.requires.ad_hoc_engines
+    def test_cant_listen_to_option_engine(self):
+        from sqlalchemy.engine import base
+
+        def evt(*arg, **kw):
+            pass
+
+        assert_raises_message(
+            tsa.exc.InvalidRequestError,
+            r"Can't assign an event directly to the "
+            "<class 'sqlalchemy.engine.base.OptionEngine'> class",
+            event.listen, base.OptionEngine, "before_cursor_execute", evt
+        )
+
+    @testing.requires.ad_hoc_engines
+    def test_dispose_event(self):
+        canary = Mock()
+        eng = create_engine(testing.db.url)
+        event.listen(eng, "engine_disposed", canary)
+
+        conn = eng.connect()
+        conn.close()
+        eng.dispose()
+
+        conn = eng.connect()
+        conn.close()
+
+        eq_(
+            canary.mock_calls,
+            [call(eng)]
+        )
+
+        eng.dispose()
+
+        eq_(
+            canary.mock_calls,
+            [call(eng), call(eng)]
+        )
+
     def test_retval_flag(self):
         canary = []
 
@@ -1829,7 +1935,8 @@ class HandleErrorTest(fixtures.TestBase):
 
         with expect_warnings(
             r"An exception has occurred during handling of a previous "
-            r"exception.  The previous exception is.*i_dont_exist",
+            r"exception.  The previous exception "
+            r"is.*(?:i_dont_exist|does not exist)",
             py2konly=True
         ):
             with patch.object(conn.dialect, "do_rollback", boom) as patched:
