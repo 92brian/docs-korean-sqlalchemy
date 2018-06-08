@@ -823,7 +823,7 @@ Specifying Result-Column Behaviors
     ...
     InvalidRequestError: Ambiguous column name 'id' in result set column descriptions
 
-: class :`.Column` 객체를 사용해 결과 세트의 컬럼에 액세스하는 것은 일반적이지 않아 보일 수 있지만,
+:class:`.Column` 객체를 사용해 결과 세트의 컬럼에 액세스하는 것은 일반적이지 않아 보일 수 있지만,
 이는 실제로 :class:`~.orm.query.Query` 객체의 표면 아래에서 투명하게 발생하는 ORM에서
 사용하는 유일한 시스템이다. 이런 방식으로 :meth:`.TextClause.columns` 메서드는
 ORM에서 사용할 텍스트 명령문에 매우 적합하다. :ref:`orm_tutorial_literal_sql`\ 의 예는
@@ -1471,7 +1471,7 @@ Scalar Selects
     ...             as_scalar()
 
 위 구문은 이제 :class:`~.expression.ScalarSelect` 객체이며,
-더이상 class:`~.expression.FromClause` 계층의 일부가 아니다.
+더이상 :class:`~.expression.FromClause` 계층의 일부가 아니다.
 대신 표현식 구문의 :class:`~.expression.ColumnElement` 계열 내에 있다.
 이 구문을 다른 :func:`.select` 내의 다른 컬럼과 동일하게 놓을 수 있다:
 
@@ -1932,7 +1932,7 @@ SET 절을 렌더링 할 때 :func:`.update` 구문의 기본 동작은
 
 이 특정 사용 케이스에 맞춰
 :paramref:`~sqlalchemy.sql.expression.update.preserve_parameter_order`
-플래그를 사용할 수 있다. 이 플래그를 사용할 때 : meth :`.Update.values` 메서드의 인자로
+플래그를 사용할 수 있다. 이 플래그를 사용할 때 :meth:`.Update.values` 메서드의 인자로
 **2-튜플의 파이썬 리스트**\ 를 제공한다::
 
     stmt = some_table.update(preserve_parameter_order=True).\
