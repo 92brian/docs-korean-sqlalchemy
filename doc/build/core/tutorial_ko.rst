@@ -37,11 +37,11 @@ ORM과 표현식 언어의 사용 패턴 사이에 겹치는 부분이 존재하
 버전 확인
 =============
 
-**1.2 버전** 이상의 SQLAlchemy를 사용하고 있는지 확인한다::
+**1.3 버전** 이상의 SQLAlchemy를 사용하고 있는지 확인한다::
 
     >>> import sqlalchemy
     >>> sqlalchemy.__version__ # doctest:+SKIP
-    1.2.0
+    1.3.0
 
 데이터베이스 연결
 ==============================
@@ -748,7 +748,7 @@ Specifying Bound Parameter Behaviors
 
 파라미터는 명시적으로 타입이 지정될 수도 있다::
 
-    stmt = stmt.bindparams(bindparam("x", String), bindparam("y", String))
+    stmt = stmt.bindparams(bindparam("x", type_=String), bindparam("y", type_=String))
     result = conn.execute(stmt, {"x": "m", "y": "z"})
 
 형식에 데이터타입에서 제공되는 파이썬이나 특정 SQL에서의 처리가 필요할 때,

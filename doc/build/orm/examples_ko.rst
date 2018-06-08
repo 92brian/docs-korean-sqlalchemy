@@ -76,6 +76,13 @@ Relationship Join Conditions
 
 .. automodule:: examples.join_conditions
 
+.. _examples_spaceinvaders:
+
+Space Invaders
+--------------
+
+.. automodule:: examples.space_invaders
+
 .. _examples_xmlpersistence:
 
 XML Persistence
@@ -99,6 +106,8 @@ Versioning using Temporal Rows
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: examples.versioned_rows
+
+.. _examples_vertical_tables:
 
 Vertical Attribute Mapping
 --------------------------
@@ -149,4 +158,3 @@ PostGIS Integration
 -------------------
 
 .. automodule:: examples.postgis
-

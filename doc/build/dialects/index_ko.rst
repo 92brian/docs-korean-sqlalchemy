@@ -50,6 +50,7 @@ Production Ready
   developed jointly by IBM and SQLAlchemy developers.
 * `sqlalchemy-redshift <https://pypi.python.org/pypi/sqlalchemy-redshift>`_ - driver for Amazon Redshift, adapts
   the existing PostgreSQL/psycopg2 driver.
+* `sqlalchemy-hana <https://github.com/SAP/sqlalchemy-hana>`_ - driver for SAP Hana.
 * `sqlalchemy_exasol <https://github.com/blue-yonder/sqlalchemy_exasol>`_ - driver for EXASolution.
 * `sqlalchemy-sqlany <https://github.com/sqlanywhere/sqlalchemy-sqlany>`_ - driver for SAP Sybase SQL
   Anywhere, developed by SAP.
@@ -80,5 +81,3 @@ their current codebase and fork off into working libraries.
 * `sqlalchemy-drizzle <https://bitbucket.org/zzzeek/sqlalchemy-drizzle>`_ - driver for the Drizzle MySQL variant.
 * `sqlalchemy-informixdb <https://bitbucket.org/zzzeek/sqlalchemy-informixdb>`_ - driver for the informixdb DBAPI.
 * `sqlalchemy-maxdb <https://bitbucket.org/zzzeek/sqlalchemy-maxdb>`_ - driver for the MaxDB database
-
-
