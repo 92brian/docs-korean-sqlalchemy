@@ -34,7 +34,7 @@ needs_sphinx = '1.6.0'
 
 extensions = [
             'sphinx.ext.autodoc',
-            'zzzeeksphinx',
+            #'zzzeeksphinx',
             'changelog',
             'sphinx_paramlinks',
             ]
@@ -341,4 +341,6 @@ epub_copyright = u'2007-2015, SQLAlchemy authors'
 # Allow duplicate toc entries.
 #epub_tocdup = True
 
+locale_dirs = ['locale/']
+gettext_compact = False
 
