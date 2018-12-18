@@ -9,7 +9,7 @@ git rebase korean
 
 touch .nojekyll
 
-echo '!output/' >> .gitignore
+echo '!build/' >> .gitignore
 echo '!env/' >> .gitignore
 
 cd doc/build
