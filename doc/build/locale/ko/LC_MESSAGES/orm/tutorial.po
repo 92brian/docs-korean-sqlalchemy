@@ -1,0 +1,1609 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2007-2018, the SQLAlchemy authors and contributors
+# This file is distributed under the same license as the SQLAlchemy package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: SQLAlchemy 1.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-21 14:32+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.6.0\n"
+
+#: ../../orm/tutorial.rst:5
+msgid "Object Relational Tutorial"
+msgstr ""
+
+#: ../../orm/tutorial.rst:7
+msgid ""
+"The SQLAlchemy Object Relational Mapper presents a method of associating "
+"user-defined Python classes with database tables, and instances of those "
+"classes (objects) with rows in their corresponding tables. It includes a "
+"system that transparently synchronizes all changes in state between "
+"objects and their related rows, called a :term:`unit of work`, as well as"
+" a system for expressing database queries in terms of the user defined "
+"classes and their defined relationships between each other."
+msgstr ""
+
+#: ../../orm/tutorial.rst:15
+msgid ""
+"The ORM is in contrast to the SQLAlchemy Expression Language, upon which "
+"the ORM is constructed. Whereas the SQL Expression Language, introduced "
+"in :ref:`sqlexpression_toplevel`, presents a system of representing the "
+"primitive constructs of the relational database directly without opinion,"
+" the ORM presents a high level and abstracted pattern of usage, which "
+"itself is an example of applied usage of the Expression Language."
+msgstr ""
+
+#: ../../orm/tutorial.rst:22
+msgid ""
+"While there is overlap among the usage patterns of the ORM and the "
+"Expression Language, the similarities are more superficial than they may "
+"at first appear. One approaches the structure and content of data from "
+"the perspective of a user-defined :term:`domain model` which is "
+"transparently persisted and refreshed from its underlying storage model. "
+"The other approaches it from the perspective of literal schema and SQL "
+"expression representations which are explicitly composed into messages "
+"consumed individually by the database."
+msgstr ""
+
+#: ../../orm/tutorial.rst:31
+msgid ""
+"A successful application may be constructed using the Object Relational "
+"Mapper exclusively. In advanced situations, an application constructed "
+"with the ORM may make occasional usage of the Expression Language "
+"directly in certain areas where specific database interactions are "
+"required."
+msgstr ""
+
+#: ../../orm/tutorial.rst:36
+msgid ""
+"The following tutorial is in doctest format, meaning each ``>>>`` line "
+"represents something you can type at a Python command prompt, and the "
+"following text represents the expected return value."
+msgstr ""
+
+#: ../../orm/tutorial.rst:41
+msgid "Version Check"
+msgstr ""
+
+#: ../../orm/tutorial.rst:43
+msgid ""
+"A quick check to verify that we are on at least **version 1.3** of "
+"SQLAlchemy::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:50
+msgid "Connecting"
+msgstr ""
+
+#: ../../orm/tutorial.rst:52
+msgid ""
+"For this tutorial we will use an in-memory-only SQLite database. To "
+"connect we use :func:`~sqlalchemy.create_engine`::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:58
+msgid ""
+"The ``echo`` flag is a shortcut to setting up SQLAlchemy logging, which "
+"is accomplished via Python's standard ``logging`` module. With it "
+"enabled, we'll see all the generated SQL produced. If you are working "
+"through this tutorial and want less output generated, set it to "
+"``False``. This tutorial will format the SQL behind a popup window so it "
+"doesn't get in our way; just click the \"SQL\" links to see what's being "
+"generated."
+msgstr ""
+
+#: ../../orm/tutorial.rst:65
+msgid ""
+"The return value of :func:`.create_engine` is an instance of "
+":class:`.Engine`, and it represents the core interface to the database, "
+"adapted through a :term:`dialect` that handles the details of the "
+"database and :term:`DBAPI` in use.  In this case the SQLite dialect will "
+"interpret instructions to the Python built-in ``sqlite3`` module."
+msgstr ""
+
+msgid "Lazy Connecting"
+msgstr ""
+
+#: ../../orm/tutorial.rst:74
+msgid ""
+"The :class:`.Engine`, when first returned by :func:`.create_engine`, has "
+"not actually tried to connect to the database yet; that happens only the "
+"first time it is asked to perform a task against the database."
+msgstr ""
+
+#: ../../orm/tutorial.rst:78
+msgid ""
+"The first time a method like :meth:`.Engine.execute` or "
+":meth:`.Engine.connect` is called, the :class:`.Engine` establishes a "
+"real :term:`DBAPI` connection to the database, which is then used to emit"
+" the SQL.  When using the ORM, we typically don't use the "
+":class:`.Engine` directly once created; instead, it's used behind the "
+"scenes by the ORM as we'll see shortly."
+msgstr ""
+
+#: ../../orm/tutorial.rst:86
+msgid ""
+":ref:`database_urls` - includes examples of :func:`.create_engine` "
+"connecting to several kinds of databases with links to more information."
+msgstr ""
+
+#: ../../orm/tutorial.rst:90
+msgid "Declare a Mapping"
+msgstr ""
+
+#: ../../orm/tutorial.rst:92
+msgid ""
+"When using the ORM, the configurational process starts by describing the "
+"database tables we'll be dealing with, and then by defining our own "
+"classes which will be mapped to those tables.   In modern SQLAlchemy, "
+"these two tasks are usually performed together, using a system known as "
+":ref:`declarative_toplevel`, which allows us to create classes that "
+"include directives to describe the actual database table they will be "
+"mapped to."
+msgstr ""
+
+#: ../../orm/tutorial.rst:100
+msgid ""
+"Classes mapped using the Declarative system are defined in terms of a "
+"base class which maintains a catalog of classes and tables relative to "
+"that base - this is known as the **declarative base class**.  Our "
+"application will usually have just one instance of this base in a "
+"commonly imported module.   We create the base class using the "
+":func:`.declarative_base` function, as follows::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:111
+msgid ""
+"Now that we have a \"base\", we can define any number of mapped classes "
+"in terms of it.  We will start with just a single table called ``users``,"
+" which will store records for the end-users using our application. A new "
+"class called ``User`` will be the class to which we map this table.  "
+"Within the class, we define details about the table to which we'll be "
+"mapping, primarily the table name, and names and datatypes of columns::"
+msgstr ""
+
+msgid "Tip"
+msgstr ""
+
+#: ../../orm/tutorial.rst:133
+msgid ""
+"The ``User`` class defines a ``__repr__()`` method, but note that is "
+"**optional**; we only implement it in this tutorial so that our examples "
+"show nicely formatted ``User`` objects."
+msgstr ""
+
+#: ../../orm/tutorial.rst:138
+msgid ""
+"A class using Declarative at a minimum needs a ``__tablename__`` "
+"attribute, and at least one :class:`.Column` which is part of a primary "
+"key [#]_.  SQLAlchemy never makes any assumptions by itself about the "
+"table to which a class refers, including that it has no built-in "
+"conventions for names, datatypes, or constraints.   But this doesn't mean"
+" boilerplate is required; instead, you're encouraged to create your own "
+"automated conventions using helper functions and mixin classes, which is "
+"described in detail at :ref:`declarative_mixins`."
+msgstr ""
+
+#: ../../orm/tutorial.rst:148
+msgid ""
+"When our class is constructed, Declarative replaces all the "
+":class:`.Column` objects with special Python accessors known as "
+":term:`descriptors`; this is a process known as :term:`instrumentation`."
+"   The \"instrumented\" mapped class will provide us with the means to "
+"refer to our table in a SQL context as well as to persist and load the "
+"values of columns from the database."
+msgstr ""
+
+#: ../../orm/tutorial.rst:154
+msgid ""
+"Outside of what the mapping process does to our class, the class remains "
+"otherwise mostly a normal Python class, to which we can define any number"
+" of ordinary attributes and methods needed by our application."
+msgstr ""
+
+#: ../../orm/tutorial.rst:158
+msgid ""
+"For information on why a primary key is required, see "
+":ref:`faq_mapper_primary_key`."
+msgstr ""
+
+#: ../../orm/tutorial.rst:163
+msgid "Create a Schema"
+msgstr ""
+
+#: ../../orm/tutorial.rst:165
+msgid ""
+"With our ``User`` class constructed via the Declarative system, we have "
+"defined information about our table, known as :term:`table metadata`.   "
+"The object used by SQLAlchemy to represent this information for a "
+"specific table is called the :class:`.Table` object, and here Declarative"
+" has made one for us.  We can see this object by inspecting the "
+"``__table__`` attribute::"
+msgstr ""
+
+msgid "Classical Mappings"
+msgstr ""
+
+#: ../../orm/tutorial.rst:179
+msgid ""
+"The Declarative system, though highly recommended, is not required in "
+"order to use SQLAlchemy's ORM. Outside of Declarative, any plain Python "
+"class can be mapped to any :class:`.Table` using the :func:`.mapper` "
+"function directly; this less common usage is described at "
+":ref:`classical_mapping`."
+msgstr ""
+
+#: ../../orm/tutorial.rst:186
+msgid ""
+"When we declared our class, Declarative used a Python metaclass in order "
+"to perform additional activities once the class declaration was complete;"
+" within this phase, it then created a :class:`.Table` object according to"
+" our specifications, and associated it with the class by constructing a "
+":class:`.Mapper` object.  This object is a behind-the-scenes object we "
+"normally don't need to deal with directly (though it can provide plenty "
+"of information about our mapping when we need it)."
+msgstr ""
+
+#: ../../orm/tutorial.rst:194
+msgid ""
+"The :class:`.Table` object is a member of a larger collection known as "
+":class:`.MetaData`.  When using Declarative, this object is available "
+"using the ``.metadata`` attribute of our declarative base class."
+msgstr ""
+
+#: ../../orm/tutorial.rst:199
+msgid ""
+"The :class:`.MetaData` is a :term:`registry` which includes the ability "
+"to emit a limited set of schema generation commands to the database.  As "
+"our SQLite database does not actually have a ``users`` table present, we "
+"can use :class:`.MetaData` to issue CREATE TABLE statements to the "
+"database for all tables that don't yet exist. Below, we call the "
+":meth:`.MetaData.create_all` method, passing in our :class:`.Engine` as a"
+" source of database connectivity.  We will see that special commands are "
+"first emitted to check for the presence of the ``users`` table, and "
+"following that the actual ``CREATE TABLE`` statement:"
+msgstr ""
+
+msgid "Minimal Table Descriptions vs. Full Descriptions"
+msgstr ""
+
+#: ../../orm/tutorial.rst:226
+msgid ""
+"Users familiar with the syntax of CREATE TABLE may notice that the "
+"VARCHAR columns were generated without a length; on SQLite and "
+"PostgreSQL, this is a valid datatype, but on others, it's not allowed. So"
+" if running this tutorial on one of those databases, and you wish to use "
+"SQLAlchemy to issue CREATE TABLE, a \"length\" may be provided to the "
+":class:`~sqlalchemy.types.String` type as below::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:235
+msgid ""
+"The length field on :class:`~sqlalchemy.types.String`, as well as similar"
+" precision/scale fields available on :class:`~sqlalchemy.types.Integer`, "
+":class:`~sqlalchemy.types.Numeric`, etc. are not referenced by SQLAlchemy"
+" other than when creating tables."
+msgstr ""
+
+#: ../../orm/tutorial.rst:239
+msgid ""
+"Additionally, Firebird and Oracle require sequences to generate new "
+"primary key identifiers, and SQLAlchemy doesn't generate or assume these "
+"without being instructed. For that, you use the "
+":class:`~sqlalchemy.schema.Sequence` construct::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:246
+msgid ""
+"A full, foolproof :class:`~sqlalchemy.schema.Table` generated via our "
+"declarative mapping is therefore::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:260
+msgid ""
+"We include this more verbose table definition separately to highlight the"
+" difference between a minimal construct geared primarily towards in-"
+"Python usage only, versus one that will be used to emit CREATE TABLE "
+"statements on a particular set of backends with more stringent "
+"requirements."
+msgstr ""
+
+#: ../../orm/tutorial.rst:267
+msgid "Create an Instance of the Mapped Class"
+msgstr ""
+
+#: ../../orm/tutorial.rst:269
+msgid "With mappings complete, let's now create and inspect a ``User`` object::"
+msgstr ""
+
+msgid "the ``__init__()`` method"
+msgstr ""
+
+#: ../../orm/tutorial.rst:282
+msgid ""
+"Our ``User`` class, as defined using the Declarative system, has been "
+"provided with a constructor (e.g. ``__init__()`` method) which "
+"automatically accepts keyword names that match the columns we've mapped."
+"    We are free to define any explicit ``__init__()`` method we prefer on"
+" our class, which will override the default method provided by "
+"Declarative."
+msgstr ""
+
+#: ../../orm/tutorial.rst:288
+msgid ""
+"Even though we didn't specify it in the constructor, the ``id`` attribute"
+" still produces a value of ``None`` when we access it (as opposed to "
+"Python's usual behavior of raising ``AttributeError`` for an undefined "
+"attribute). SQLAlchemy's :term:`instrumentation` normally produces this "
+"default value for column-mapped attributes when first accessed.    For "
+"those attributes where we've actually assigned a value, the "
+"instrumentation system is tracking those assignments for use within an "
+"eventual INSERT statement to be emitted to the database."
+msgstr ""
+
+#: ../../orm/tutorial.rst:298
+msgid "Creating a Session"
+msgstr ""
+
+#: ../../orm/tutorial.rst:300
+msgid ""
+"We're now ready to start talking to the database. The ORM's \"handle\" to"
+" the database is the :class:`~sqlalchemy.orm.session.Session`. When we "
+"first set up the application, at the same level as our "
+":func:`~sqlalchemy.create_engine` statement, we define a "
+":class:`~sqlalchemy.orm.session.Session` class which will serve as a "
+"factory for new :class:`~sqlalchemy.orm.session.Session` objects::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:310
+msgid ""
+"In the case where your application does not yet have an "
+":class:`~sqlalchemy.engine.Engine` when you define your module-level "
+"objects, just set it up like this::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:316
+msgid ""
+"Later, when you create your engine with "
+":func:`~sqlalchemy.create_engine`, connect it to the "
+":class:`~sqlalchemy.orm.session.Session` using "
+":meth:`~.sessionmaker.configure`::"
+msgstr ""
+
+msgid "Session Lifecycle Patterns"
+msgstr ""
+
+#: ../../orm/tutorial.rst:324
+msgid ""
+"The question of when to make a :class:`.Session` depends a lot on what "
+"kind of application is being built.  Keep in mind, the :class:`.Session` "
+"is just a workspace for your objects, local to a particular database "
+"connection - if you think of an application thread as a guest at a dinner"
+" party, the :class:`.Session` is the guest's plate and the objects it "
+"holds are the food (and the database...the kitchen?)!  More on this topic"
+" available at :ref:`session_faq_whentocreate`."
+msgstr ""
+
+#: ../../orm/tutorial.rst:333
+msgid ""
+"This custom-made :class:`~sqlalchemy.orm.session.Session` class will "
+"create new :class:`~sqlalchemy.orm.session.Session` objects which are "
+"bound to our database. Other transactional characteristics may be defined"
+" when calling :class:`~.sessionmaker` as well; these are described in a "
+"later chapter. Then, whenever you need to have a conversation with the "
+"database, you instantiate a :class:`~sqlalchemy.orm.session.Session`::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:342
+msgid ""
+"The above :class:`~sqlalchemy.orm.session.Session` is associated with our"
+" SQLite-enabled :class:`.Engine`, but it hasn't opened any connections "
+"yet. When it's first used, it retrieves a connection from a pool of "
+"connections maintained by the :class:`.Engine`, and holds onto it until "
+"we commit all changes and/or close the session object."
+msgstr ""
+
+#: ../../orm/tutorial.rst:350
+msgid "Adding and Updating Objects"
+msgstr ""
+
+#: ../../orm/tutorial.rst:352
+msgid ""
+"To persist our ``User`` object, we :meth:`~.Session.add` it to our "
+":class:`~sqlalchemy.orm.session.Session`::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:357
+msgid ""
+"At this point, we say that the instance is **pending**; no SQL has yet "
+"been issued and the object is not yet represented by a row in the "
+"database.  The :class:`~sqlalchemy.orm.session.Session` will issue the "
+"SQL to persist ``Ed Jones`` as soon as is needed, using a process known "
+"as a **flush**. If we query the database for ``Ed Jones``, all pending "
+"information will first be flushed, and the query is issued immediately "
+"thereafter."
+msgstr ""
+
+#: ../../orm/tutorial.rst:364
+msgid ""
+"For example, below we create a new :class:`~sqlalchemy.orm.query.Query` "
+"object which loads instances of ``User``. We \"filter by\" the ``name`` "
+"attribute of ``ed``, and indicate that we'd like only the first result in"
+" the full list of rows. A ``User`` instance is returned which is "
+"equivalent to that which we've added:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:387
+msgid ""
+"In fact, the :class:`~sqlalchemy.orm.session.Session` has identified that"
+" the row returned is the **same** row as one already represented within "
+"its internal map of objects, so we actually got back the identical "
+"instance as that which we just added::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:395
+msgid ""
+"The ORM concept at work here is known as an :term:`identity map` and "
+"ensures that all operations upon a particular row within a "
+":class:`~sqlalchemy.orm.session.Session` operate upon the same set of "
+"data. Once an object with a particular primary key is present in the "
+":class:`~sqlalchemy.orm.session.Session`, all SQL queries on that "
+":class:`~sqlalchemy.orm.session.Session` will always return the same "
+"Python object for that particular primary key; it also will raise an "
+"error if an attempt is made to place a second, already-persisted object "
+"with the same primary key within the session."
+msgstr ""
+
+#: ../../orm/tutorial.rst:406
+msgid ""
+"We can add more ``User`` objects at once using "
+":func:`~sqlalchemy.orm.session.Session.add_all`:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:416
+msgid ""
+"Also, we've decided the password for Ed isn't too secure, so lets change "
+"it:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:422
+msgid ""
+"The :class:`~sqlalchemy.orm.session.Session` is paying attention. It "
+"knows, for example, that ``Ed Jones`` has been modified:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:430
+msgid "and that three new ``User`` objects are pending:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:439
+msgid ""
+"We tell the :class:`~sqlalchemy.orm.session.Session` that we'd like to "
+"issue all remaining changes to the database and commit the transaction, "
+"which has been in progress throughout. We do this via "
+":meth:`~.Session.commit`.  The :class:`~sqlalchemy.orm.session.Session` "
+"emits the ``UPDATE`` statement for the password change on \"ed\", as well"
+" as ``INSERT`` statements for the three new ``User`` objects we've added:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:459
+msgid ""
+":meth:`~.Session.commit` flushes the remaining changes to the database, "
+"and commits the transaction. The connection resources referenced by the "
+"session are now returned to the connection pool. Subsequent operations "
+"with this session will occur in a **new** transaction, which will again "
+"re-acquire connection resources when first needed."
+msgstr ""
+
+#: ../../orm/tutorial.rst:465
+msgid ""
+"If we look at Ed's ``id`` attribute, which earlier was ``None``, it now "
+"has a value:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:480
+msgid ""
+"After the :class:`~sqlalchemy.orm.session.Session` inserts new rows in "
+"the database, all newly generated identifiers and database-generated "
+"defaults become available on the instance, either immediately or via "
+"load-on-first-access. In this case, the entire row was re-loaded on "
+"access because a new transaction was begun after we issued "
+":meth:`~.Session.commit`. SQLAlchemy by default refreshes data from a "
+"previous transaction the first time it's accessed within a new "
+"transaction, so that the most recent state is available. The level of "
+"reloading is configurable as is described in :doc:`/orm/session`."
+msgstr ""
+
+msgid "Session Object States"
+msgstr ""
+
+#: ../../orm/tutorial.rst:491
+msgid ""
+"As our ``User`` object moved from being outside the :class:`.Session`, to"
+" inside the :class:`.Session` without a primary key, to actually being "
+"inserted, it moved between three out of four available \"object states\" "
+"- **transient**, **pending**, and **persistent**. Being aware of these "
+"states and what they mean is always a good idea - be sure to read "
+":ref:`session_object_states` for a quick overview."
+msgstr ""
+
+#: ../../orm/tutorial.rst:499
+msgid "Rolling Back"
+msgstr ""
+
+#: ../../orm/tutorial.rst:500
+msgid ""
+"Since the :class:`~sqlalchemy.orm.session.Session` works within a "
+"transaction, we can roll back changes made too. Let's make two changes "
+"that we'll revert; ``ed_user``'s user name gets set to ``Edwardo``:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:508
+msgid "and we'll add another erroneous user, ``fake_user``:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:515
+msgid ""
+"Querying the session, we can see that they're flushed into the current "
+"transaction:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:533
+msgid ""
+"Rolling back, we can see that ``ed_user``'s name is back to ``ed``, and "
+"``fake_user`` has been kicked out of the session:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:555
+msgid "issuing a SELECT illustrates the changes made to the database:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:572
+msgid "Querying"
+msgstr ""
+
+#: ../../orm/tutorial.rst:574
+msgid ""
+"A :class:`~sqlalchemy.orm.query.Query` object is created using the "
+":class:`~sqlalchemy.orm.session.Session.query()` method on "
+":class:`~sqlalchemy.orm.session.Session`. This function takes a variable "
+"number of arguments, which can be any combination of classes and class-"
+"instrumented descriptors. Below, we indicate a "
+":class:`~sqlalchemy.orm.query.Query` which loads ``User`` instances. When"
+" evaluated in an iterative context, the list of ``User`` objects present "
+"is returned:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:598
+msgid ""
+"The :class:`~sqlalchemy.orm.query.Query` also accepts ORM-instrumented "
+"descriptors as arguments. Any time multiple class entities or column-"
+"based entities are expressed as arguments to the "
+":class:`~sqlalchemy.orm.session.Session.query()` function, the return "
+"result is expressed as tuples:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:617
+msgid ""
+"The tuples returned by :class:`~sqlalchemy.orm.query.Query` are *named* "
+"tuples, supplied by the :class:`.KeyedTuple` class, and can be treated "
+"much like an ordinary Python object. The names are the same as the "
+"attribute's name for an attribute, and the class name for a class:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:638
+msgid ""
+"You can control the names of individual column expressions using the "
+":meth:`~.ColumnElement.label` construct, which is available from any "
+":class:`.ColumnElement`-derived object, as well as any class attribute "
+"which is mapped to one (such as ``User.name``):"
+msgstr ""
+
+#: ../../orm/tutorial.rst:655
+msgid ""
+"The name given to a full entity such as ``User``, assuming that multiple "
+"entities are present in the call to :meth:`~.Session.query`, can be "
+"controlled using :func:`~.sqlalchemy.orm.aliased` :"
+msgstr ""
+
+#: ../../orm/tutorial.rst:677
+msgid ""
+"Basic operations with :class:`~sqlalchemy.orm.query.Query` include "
+"issuing LIMIT and OFFSET, most conveniently using Python array slices and"
+" typically in conjunction with ORDER BY:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:695
+msgid ""
+"and filtering results, which is accomplished either with "
+":func:`~sqlalchemy.orm.query.Query.filter_by`, which uses keyword "
+"arguments:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:708
+msgid ""
+"...or :func:`~sqlalchemy.orm.query.Query.filter`, which uses more "
+"flexible SQL expression language constructs. These allow you to use "
+"regular Python operators with the class-level attributes on your mapped "
+"class:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:722
+msgid ""
+"The :class:`~sqlalchemy.orm.query.Query` object is fully **generative**, "
+"meaning that most method calls return a new "
+":class:`~sqlalchemy.orm.query.Query` object upon which further criteria "
+"may be added. For example, to query for users named \"ed\" with a full "
+"name of \"Ed Jones\", you can call "
+":func:`~sqlalchemy.orm.query.Query.filter` twice, which joins criteria "
+"using ``AND``:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:745
+msgid "Common Filter Operators"
+msgstr ""
+
+#: ../../orm/tutorial.rst:747
+msgid ""
+"Here's a rundown of some of the most common operators used in "
+":func:`~sqlalchemy.orm.query.Query.filter`:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:750
+msgid ":meth:`equals <.ColumnOperators.__eq__>`::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:754
+msgid ":meth:`not equals <.ColumnOperators.__ne__>`::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:758
+msgid ":meth:`LIKE <.ColumnOperators.like>`::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:762
+msgid ""
+":meth:`.ColumnOperators.like` renders the LIKE operator, which is case "
+"insensitive on some backends, and case sensitive on others.  For "
+"guaranteed case-insensitive comparisons, use "
+":meth:`.ColumnOperators.ilike`."
+msgstr ""
+
+#: ../../orm/tutorial.rst:767
+msgid ":meth:`ILIKE <.ColumnOperators.ilike>` (case-insensitive LIKE)::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:771
+msgid ""
+"most backends don't support ILIKE directly.  For those, the "
+":meth:`.ColumnOperators.ilike` operator renders an expression combining "
+"LIKE with the LOWER SQL function applied to each operand."
+msgstr ""
+
+#: ../../orm/tutorial.rst:775
+msgid ":meth:`IN <.ColumnOperators.in_>`::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:784
+msgid ":meth:`NOT IN <.ColumnOperators.notin_>`::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:788
+msgid ":meth:`IS NULL <.ColumnOperators.is_>`::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:795
+msgid ":meth:`IS NOT NULL <.ColumnOperators.isnot>`::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:802
+msgid ":func:`AND <.sql.expression.and_>`::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:814
+msgid "Make sure you use :func:`.and_` and **not** the Python ``and`` operator!"
+msgstr ""
+
+#: ../../orm/tutorial.rst:817
+msgid ":func:`OR <.sql.expression.or_>`::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:822
+msgid "Make sure you use :func:`.or_` and **not** the Python ``or`` operator!"
+msgstr ""
+
+#: ../../orm/tutorial.rst:825
+msgid ":meth:`MATCH <.ColumnOperators.match>`::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:831
+msgid ""
+":meth:`~.ColumnOperators.match` uses a database-specific ``MATCH`` or "
+"``CONTAINS`` function; its behavior will vary by backend and is not "
+"available on some backends such as SQLite."
+msgstr ""
+
+#: ../../orm/tutorial.rst:836
+msgid "Returning Lists and Scalars"
+msgstr ""
+
+#: ../../orm/tutorial.rst:838
+msgid ""
+"A number of methods on :class:`.Query` immediately issue SQL and return a"
+" value containing loaded database results.  Here's a brief tour:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:842
+msgid ":meth:`~.Query.all()` returns a list:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:858
+msgid ""
+":meth:`~.Query.first()` applies a limit of one and returns the first "
+"result as a scalar:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:874
+msgid ""
+":meth:`~.Query.one()` fully fetches all rows, and if not exactly one "
+"object identity or composite row is present in the result, raises an "
+"error.  With multiple rows found:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:885
+msgid "With no rows found:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:894
+msgid ""
+"The :meth:`~.Query.one` method is great for systems that expect to handle"
+" \"no items found\" versus \"multiple items found\" differently; such as "
+"a RESTful web service, which may want to raise a \"404 not found\" when "
+"no results are found, but raise an application error when multiple "
+"results are found."
+msgstr ""
+
+#: ../../orm/tutorial.rst:899
+msgid ""
+":meth:`~.Query.one_or_none` is like :meth:`~.Query.one`, except that if "
+"no results are found, it doesn't raise an error; it just returns "
+"``None``. Like :meth:`~.Query.one`, however, it does raise an error if "
+"multiple results are found."
+msgstr ""
+
+#: ../../orm/tutorial.rst:904
+msgid ""
+":meth:`~.Query.scalar` invokes the :meth:`~.Query.one` method, and upon "
+"success returns the first column of the row:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:921
+msgid "Using Textual SQL"
+msgstr ""
+
+#: ../../orm/tutorial.rst:923
+msgid ""
+"Literal strings can be used flexibly with "
+":class:`~sqlalchemy.orm.query.Query`, by specifying their use with the "
+":func:`~.expression.text` construct, which is accepted by most applicable"
+" methods.  For example, :meth:`~sqlalchemy.orm.query.Query.filter()` and "
+":meth:`~sqlalchemy.orm.query.Query.order_by()`:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:949
+msgid ""
+"Bind parameters can be specified with string-based SQL, using a colon. To"
+" specify the values, use the :meth:`~sqlalchemy.orm.query.Query.params()`"
+" method:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:966
+msgid ""
+"To use an entirely string-based statement, a :func:`.text` construct "
+"representing a complete statement can be passed to "
+":meth:`~sqlalchemy.orm.query.Query.from_statement()`.  Without additional"
+" specifiers, the columns in the string SQL are matched to the model "
+"columns based on name, such as below where we use just an asterisk to "
+"represent loading all columns:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:982
+msgid ""
+"Matching columns on name works for simple cases but can become unwieldy "
+"when dealing with complex statements that contain duplicate column names "
+"or when using anonymized ORM constructs that don't easily match to "
+"specific names. Additionally, there is typing behavior present in our "
+"mapped columns that we might find necessary when handling result rows.  "
+"For these cases, the :func:`~.expression.text` construct allows us to "
+"link its textual SQL to Core or ORM-mapped column expressions "
+"positionally; we can achieve this by passing column expressions as "
+"positional arguments to the :meth:`.TextClause.columns` method:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1004
+msgid ""
+"The :meth:`.TextClause.columns` method now accepts column expressions "
+"which will be matched positionally to a plain text SQL result set, "
+"eliminating the need for column names to match or even be unique in the "
+"SQL statement."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1009
+msgid ""
+"When selecting from a :func:`~.expression.text` construct, the "
+":class:`.Query` may still specify what columns and entities are to be "
+"returned; instead of ``query(User)`` we can also ask for the columns "
+"individually, as in any other case:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1026
+msgid ""
+":ref:`sqlexpression_text` - The :func:`.text` construct explained from "
+"the perspective of Core-only queries."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1030
+msgid "Counting"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1032
+msgid ""
+":class:`~sqlalchemy.orm.query.Query` includes a convenience method for "
+"counting called :meth:`~sqlalchemy.orm.query.Query.count()`:"
+msgstr ""
+
+msgid "Counting on ``count()``"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1050
+msgid ""
+":meth:`.Query.count` used to be a very complicated method when it would "
+"try to guess whether or not a subquery was needed around the existing "
+"query, and in some exotic cases it wouldn't do the right thing. Now that "
+"it uses a simple subquery every time, it's only two lines long and always"
+" returns the right answer.  Use ``func.count()`` if a particular "
+"statement absolutely cannot tolerate the subquery being present."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1058
+msgid ""
+"The :meth:`~.Query.count()` method is used to determine how many rows the"
+" SQL statement would return.   Looking at the generated SQL above, "
+"SQLAlchemy always places whatever it is we are querying into a subquery, "
+"then counts the rows from that.   In some cases this can be reduced to a "
+"simpler ``SELECT count(*) FROM table``, however modern versions of "
+"SQLAlchemy don't try to guess when this is appropriate, as the exact SQL "
+"can be emitted using more explicit means."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1066
+msgid ""
+"For situations where the \"thing to be counted\" needs to be indicated "
+"specifically, we can specify the \"count\" function directly using the "
+"expression ``func.count()``, available from the "
+":attr:`~sqlalchemy.sql.expression.func` construct.  Below we use it to "
+"return the count of each distinct user name:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1081
+msgid "To achieve our simple ``SELECT count(*) FROM table``, we can apply it as:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1091
+msgid ""
+"The usage of :meth:`~.Query.select_from` can be removed if we express the"
+" count in terms of the ``User`` primary key directly:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1105
+msgid "Building a Relationship"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1107
+msgid ""
+"Let's consider how a second table, related to ``User``, can be mapped and"
+" queried.  Users in our system can store any number of email addresses "
+"associated with their username. This implies a basic one to many "
+"association from the ``users`` to a new table which stores email "
+"addresses, which we will call ``addresses``. Using declarative, we define"
+" this table along with its mapped class, ``Address``:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1133
+msgid ""
+"The above class introduces the :class:`.ForeignKey` construct, which is a"
+" directive applied to :class:`.Column` that indicates that values in this"
+" column should be :term:`constrained` to be values present in the named "
+"remote column. This is a core feature of relational databases, and is the"
+" \"glue\" that transforms an otherwise unconnected collection of tables "
+"to have rich overlapping relationships. The :class:`.ForeignKey` above "
+"expresses that values in the ``addresses.user_id`` column should be "
+"constrained to those values in the ``users.id`` column, i.e. its primary "
+"key."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1142
+msgid ""
+"A second directive, known as :func:`.relationship`, tells the ORM that "
+"the ``Address`` class itself should be linked to the ``User`` class, "
+"using the attribute ``Address.user``. :func:`.relationship` uses the "
+"foreign key relationships between the two tables to determine the nature "
+"of this linkage, determining that ``Address.user`` will be :term:`many to"
+" one`. An additional :func:`.relationship` directive is placed on the "
+"``User`` mapped class under the attribute ``User.addresses``.  In both "
+":func:`.relationship` directives, the parameter "
+":paramref:`.relationship.back_populates` is assigned to refer to the "
+"complementary attribute names; by doing so, each :func:`.relationship` "
+"can make intelligent decision about the same relationship as expressed in"
+" reverse;  on one side, ``Address.user`` refers to a ``User`` instance, "
+"and on the other side, ``User.addresses`` refers to a list of ``Address``"
+" instances."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1160
+msgid ""
+"The :paramref:`.relationship.back_populates` parameter is a newer version"
+" of a very common SQLAlchemy feature called "
+":paramref:`.relationship.backref`.  The :paramref:`.relationship.backref`"
+" parameter hasn't gone anywhere and will always remain available! The "
+":paramref:`.relationship.back_populates` is the same thing, except a "
+"little more verbose and easier to manipulate.  For an overview of the "
+"entire topic, see the section :ref:`relationships_backref`."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1168
+msgid ""
+"The reverse side of a many-to-one relationship is always :term:`one to "
+"many`. A full catalog of available :func:`.relationship` configurations "
+"is at :ref:`relationship_patterns`."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1172
+msgid ""
+"The two complementing relationships ``Address.user`` and "
+"``User.addresses`` are referred to as a :term:`bidirectional "
+"relationship`, and is a key feature of the SQLAlchemy ORM.   The section "
+":ref:`relationships_backref` discusses the \"backref\" feature in detail."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1177
+msgid ""
+"Arguments to :func:`.relationship` which concern the remote class can be "
+"specified using strings, assuming the Declarative system is in use.   "
+"Once all mappings are complete, these strings are evaluated as Python "
+"expressions in order to produce the actual argument, in the above case "
+"the ``User`` class.   The names which are allowed during this evaluation "
+"include, among other things, the names of all classes which have been "
+"created in terms of the declared base."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1185
+msgid ""
+"See the docstring for :func:`.relationship` for more detail on argument "
+"style."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1189
+msgid ""
+"a FOREIGN KEY constraint in most (though not all) relational databases "
+"can only link to a primary key column, or a column that has a UNIQUE "
+"constraint."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1191
+msgid ""
+"a FOREIGN KEY constraint that refers to a multiple column primary key, "
+"and itself has multiple columns, is known as a \"composite foreign key\"."
+"  It can also reference a subset of those columns."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1194
+msgid ""
+"FOREIGN KEY columns can automatically update themselves, in response to a"
+" change in the referenced column or row.  This is known as the CASCADE "
+"*referential action*, and is a built in function of the relational "
+"database."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1197
+msgid ""
+"FOREIGN KEY can refer to its own table.  This is referred to as a \"self-"
+"referential\" foreign key."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1199
+msgid ""
+"Read more about foreign keys at `Foreign Key - Wikipedia "
+"<http://en.wikipedia.org/wiki/Foreign_key>`_."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1201
+msgid ""
+"We'll need to create the ``addresses`` table in the database, so we will "
+"issue another CREATE from our metadata, which will skip over tables which"
+" have already been created:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1220
+msgid "Working with Related Objects"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1222
+msgid ""
+"Now when we create a ``User``, a blank ``addresses`` collection will be "
+"present. Various collection types, such as sets and dictionaries, are "
+"possible here (see :ref:`custom_collections` for details), but by "
+"default, the collection is a Python list."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1233
+msgid ""
+"We are free to add ``Address`` objects on our ``User`` object. In this "
+"case we just assign a full list directly:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1242
+msgid ""
+"When using a bidirectional relationship, elements added in one direction "
+"automatically become visible in the other direction.  This behavior "
+"occurs based on attribute on-change events and is evaluated in Python, "
+"without using any SQL:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1255
+msgid ""
+"Let's add and commit ``Jack Bean`` to the database. ``jack`` as well as "
+"the two ``Address`` members in the corresponding ``addresses`` collection"
+" are both added to the session at once, using a process known as "
+"**cascading**:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1272
+msgid ""
+"Querying for Jack, we get just Jack back.  No SQL is yet issued for "
+"Jack's addresses:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1290
+msgid "Let's look at the ``addresses`` collection.  Watch the SQL:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1304
+msgid ""
+"When we accessed the ``addresses`` collection, SQL was suddenly issued. "
+"This is an example of a :term:`lazy loading` relationship.  The "
+"``addresses`` collection is now loaded and behaves just like an ordinary "
+"list.  We'll cover ways to optimize the loading of this collection in a "
+"bit."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1312
+msgid "Querying with Joins"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1314
+msgid ""
+"Now that we have two tables, we can show some more features of "
+":class:`.Query`, specifically how to create queries that deal with both "
+"tables at the same time. The `Wikipedia page on SQL JOIN "
+"<http://en.wikipedia.org/wiki/Join_%28SQL%29>`_ offers a good "
+"introduction to join techniques, several of which we'll illustrate here."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1320
+msgid ""
+"To construct a simple implicit join between ``User`` and ``Address``, we "
+"can use :meth:`.Query.filter()` to equate their related columns together."
+" Below we load the ``User`` and ``Address`` entities at once using this "
+"method:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1346
+msgid ""
+"The actual SQL JOIN syntax, on the other hand, is most easily achieved "
+"using the :meth:`.Query.join` method:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1363
+msgid ""
+":meth:`.Query.join` knows how to join between ``User`` and ``Address`` "
+"because there's only one foreign key between them. If there were no "
+"foreign keys, or several, :meth:`.Query.join` works better when one of "
+"the following forms are used::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1373
+msgid ""
+"As you would expect, the same idea is used for \"outer\" joins, using the"
+" :meth:`~.Query.outerjoin` function::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1378
+msgid ""
+"The reference documentation for :meth:`~.Query.join` contains detailed "
+"information and examples of the calling styles accepted by this method; "
+":meth:`~.Query.join` is an important method at the center of usage for "
+"any SQL-fluent application."
+msgstr ""
+
+msgid "What does :class:`.Query` select from if there's multiple entities?"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1384
+msgid ""
+"The :meth:`.Query.join` method will **typically join from the leftmost "
+"item** in the list of entities, when the ON clause is omitted, or if the "
+"ON clause is a plain SQL expression.  To control the first entity in the "
+"list of JOINs, use the :meth:`.Query.select_from` method::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1395
+msgid "Using Aliases"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1397
+msgid ""
+"When querying across multiple tables, if the same table needs to be "
+"referenced more than once, SQL typically requires that the table be "
+"*aliased* with another name, so that it can be distinguished against "
+"other occurrences of that table. The :class:`~sqlalchemy.orm.query.Query`"
+" supports this most explicitly using the :attr:`~sqlalchemy.orm.aliased` "
+"construct. Below we join to the ``Address`` entity twice, to locate a "
+"user who has two distinct email addresses at the same time:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1430
+msgid "Using Subqueries"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1432
+msgid ""
+"The :class:`~sqlalchemy.orm.query.Query` is suitable for generating "
+"statements which can be used as subqueries. Suppose we wanted to load "
+"``User`` objects along with a count of how many ``Address`` records each "
+"user has. The best way to generate SQL like this is to get the count of "
+"addresses grouped by user ids, and JOIN to the parent. In this case we "
+"use a LEFT OUTER JOIN so that we get rows back for those users who don't "
+"have any addresses, e.g.::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1444
+msgid ""
+"Using the :class:`~sqlalchemy.orm.query.Query`, we build a statement like"
+" this from the inside out. The ``statement`` accessor returns a SQL "
+"expression representing the statement generated by a particular "
+":class:`~sqlalchemy.orm.query.Query` - this is an instance of a "
+":func:`~.expression.select` construct, which are described in "
+":ref:`sqlexpression_toplevel`::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1455
+msgid ""
+"The ``func`` keyword generates SQL functions, and the ``subquery()`` "
+"method on :class:`~sqlalchemy.orm.query.Query` produces a SQL expression "
+"construct representing a SELECT statement embedded within an alias (it's "
+"actually shorthand for ``query.statement.alias()``)."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1460
+msgid ""
+"Once we have our statement, it behaves like a "
+":class:`~sqlalchemy.schema.Table` construct, such as the one we created "
+"for ``users`` at the start of this tutorial. The columns on the statement"
+" are accessible through an attribute called ``c``:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1488
+msgid "Selecting Entities from Subqueries"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1490
+msgid ""
+"Above, we just selected a result that included a column from a subquery. "
+"What if we wanted our subquery to map to an entity ? For this we use "
+"``aliased()`` to associate an \"alias\" of a mapped class to a subquery:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1523
+msgid "Using EXISTS"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1525
+msgid ""
+"The EXISTS keyword in SQL is a boolean operator which returns True if the"
+" given expression contains any rows. It may be used in many scenarios in "
+"place of joins, and is also useful for locating rows which do not have a "
+"corresponding row in a related table."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1530
+msgid "There is an explicit EXISTS construct, which looks like this:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1546
+msgid ""
+"The :class:`~sqlalchemy.orm.query.Query` features several operators which"
+" make usage of EXISTS automatically. Above, the statement can be "
+"expressed along the ``User.addresses`` relationship using "
+":meth:`~.RelationshipProperty.Comparator.any`:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1563
+msgid ""
+":meth:`~.RelationshipProperty.Comparator.any` takes criterion as well, to"
+" limit the rows matched:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1578
+msgid ""
+":meth:`~.RelationshipProperty.Comparator.has` is the same operator as "
+":meth:`~.RelationshipProperty.Comparator.any` for many-to-one "
+"relationships (note the ``~`` operator here too, which means \"NOT\"):"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1597
+msgid "Common Relationship Operators"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1599
+msgid ""
+"Here's all the operators which build on relationships - each one is "
+"linked to its API documentation which includes full details on usage and "
+"behavior:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1603
+msgid ""
+":meth:`~.RelationshipProperty.Comparator.__eq__` (many-to-one \"equals\" "
+"comparison)::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1607
+msgid ""
+":meth:`~.RelationshipProperty.Comparator.__ne__` (many-to-one \"not "
+"equals\" comparison)::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1611
+msgid ""
+"IS NULL (many-to-one comparison, also uses "
+":meth:`~.RelationshipProperty.Comparator.__eq__`)::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1615
+msgid ""
+":meth:`~.RelationshipProperty.Comparator.contains` (used for one-to-many "
+"collections)::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1619
+msgid ":meth:`~.RelationshipProperty.Comparator.any` (used for collections)::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1626
+msgid ""
+":meth:`~.RelationshipProperty.Comparator.has` (used for scalar "
+"references)::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1630
+msgid ":meth:`.Query.with_parent` (used for any relationship)::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1635
+msgid "Eager Loading"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1637
+msgid ""
+"Recall earlier that we illustrated a :term:`lazy loading` operation, when"
+" we accessed the ``User.addresses`` collection of a ``User`` and SQL was "
+"emitted.  If you want to reduce the number of queries (dramatically, in "
+"many cases), we can apply an :term:`eager load` to the query operation."
+"   SQLAlchemy offers three types of eager loading, two of which are "
+"automatic, and a third which involves custom criterion.   All three are "
+"usually invoked via functions known as :term:`query options` which give "
+"additional instructions to the :class:`.Query` on how we would like "
+"various attributes to be loaded, via the :meth:`.Query.options` method."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1647
+msgid "Selectin Load"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1649
+msgid ""
+"In this case we'd like to indicate that ``User.addresses`` should load "
+"eagerly. A good choice for loading a set of objects as well as their "
+"related collections is the :func:`.orm.selectinload` option, which emits "
+"a second SELECT statement that fully loads the collections associated "
+"with the results just loaded. The name \"selectin\" originates from the "
+"fact that the SELECT statement uses an IN clause in order to locate "
+"related rows for multiple objects at once:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1685
+msgid "Joined Load"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1687
+msgid ""
+"The other automatic eager loading function is more well known and is "
+"called :func:`.orm.joinedload`.   This style of loading emits a JOIN, by "
+"default a LEFT OUTER JOIN, so that the lead object as well as the related"
+" object or collection is loaded in one step.   We illustrate loading the "
+"same ``addresses`` collection in this way - note that even though the "
+"``User.addresses`` collection on ``jack`` is actually populated right "
+"now, the query will emit the extra join regardless:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1720
+msgid ""
+"Note that even though the OUTER JOIN resulted in two rows, we still only "
+"got one instance of ``User`` back.  This is because :class:`.Query` "
+"applies a \"uniquing\" strategy, based on object identity, to the "
+"returned entities.  This is specifically so that joined eager loading can"
+" be applied without affecting the query results."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1725
+msgid ""
+"While :func:`.joinedload` has been around for a long time, "
+":func:`.selectinload` is a newer form of eager loading.   "
+":func:`.selectinload` tends to be more appropriate for loading related "
+"collections while :func:`.joinedload` tends to be better suited for many-"
+"to-one relationships, due to the fact that only one row is loaded for "
+"both the lead and the related object.   Another form of loading, "
+":func:`.subqueryload`, also exists, which can be used in place of "
+":func:`.selectinload` when making use of composite primary keys on "
+"certain backends."
+msgstr ""
+
+msgid "``joinedload()`` is not a replacement for ``join()``"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1736
+msgid ""
+"The join created by :func:`.joinedload` is anonymously aliased such that "
+"it **does not affect the query results**.   An :meth:`.Query.order_by` or"
+" :meth:`.Query.filter` call **cannot** reference these aliased tables - "
+"so-called \"user space\" joins are constructed using :meth:`.Query.join`."
+"   The rationale for this is that :func:`.joinedload` is only applied in "
+"order to affect how related objects or collections are loaded as an "
+"optimizing detail - it can be added or removed with no impact on actual "
+"results.   See the section :ref:`zen_of_eager_loading` for a detailed "
+"description of how this is used."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1747
+msgid "Explicit Join + Eagerload"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1749
+msgid ""
+"A third style of eager loading is when we are constructing a JOIN "
+"explicitly in order to locate the primary rows, and would like to "
+"additionally apply the extra table to a related object or collection on "
+"the primary object.   This feature is supplied via the "
+":func:`.orm.contains_eager` function, and is most typically useful for "
+"pre-loading the many-to-one object on a query that needs to filter on "
+"that same object.  Below we illustrate loading an ``Address`` row as well"
+" as the related ``User`` object, filtering on the ``User`` named \"jack\""
+" and using :func:`.orm.contains_eager` to apply the \"user\" columns to "
+"the ``Address.user`` attribute:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1784
+msgid ""
+"For more information on eager loading, including how to configure various"
+" forms of loading by default, see the section "
+":doc:`/orm/loading_relationships`."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1788
+msgid "Deleting"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1790
+msgid ""
+"Let's try to delete ``jack`` and see how that goes. We'll mark the object"
+" as deleted in the session, then we'll issue a ``count`` query to see "
+"that no rows remain:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1811
+msgid "So far, so good.  How about Jack's ``Address`` objects ?"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1827
+msgid ""
+"Uh oh, they're still there ! Analyzing the flush SQL, we can see that the"
+" ``user_id`` column of each address was set to NULL, but the rows weren't"
+" deleted. SQLAlchemy doesn't assume that deletes cascade, you have to "
+"tell it to do so."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1835
+msgid "Configuring delete/delete-orphan Cascade"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1837
+msgid ""
+"We will configure **cascade** options on the ``User.addresses`` "
+"relationship to change the behavior. While SQLAlchemy allows you to add "
+"new attributes and relationships to mappings at any point in time, in "
+"this case the existing relationship needs to be removed, so we need to "
+"tear down the mappings completely and start again - we'll close the "
+":class:`.Session`::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1847
+msgid "and use a new :func:`.declarative_base`::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1851
+msgid ""
+"Next we'll declare the ``User`` class, adding in the ``addresses`` "
+"relationship including the cascade configuration (we'll leave the "
+"constructor out too)::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1869
+msgid ""
+"Then we recreate ``Address``, noting that in this case we've created the "
+"``Address.user`` relationship via the ``User`` class already::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1882
+msgid ""
+"Now when we load the user ``jack`` (below using :meth:`~.Query.get`, "
+"which loads by primary key), removing an address from the corresponding "
+"``addresses`` collection will result in that ``Address`` being deleted:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1926
+msgid ""
+"Deleting Jack will delete both Jack and the remaining ``Address`` "
+"associated with the user:"
+msgstr ""
+
+msgid "More on Cascades"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1962
+msgid ""
+"Further detail on configuration of cascades is at "
+":ref:`unitofwork_cascades`. The cascade functionality can also integrate "
+"smoothly with the ``ON DELETE CASCADE`` functionality of the relational "
+"database. See :ref:`passive_deletes` for details."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1970
+msgid "Building a Many To Many Relationship"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1972
+msgid ""
+"We're moving into the bonus round here, but lets show off a many-to-many "
+"relationship. We'll sneak in some other features too, just to take a "
+"tour. We'll make our application a blog application, where users can "
+"write ``BlogPost`` items, which have ``Keyword`` items associated with "
+"them."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1977
+msgid ""
+"For a plain many-to-many, we need to create an un-mapped :class:`.Table` "
+"construct to serve as the association table.  This looks like the "
+"following::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:1987
+msgid ""
+"Above, we can see declaring a :class:`.Table` directly is a little "
+"different than declaring a mapped class.  :class:`.Table` is a "
+"constructor function, so each individual :class:`.Column` argument is "
+"separated by a comma.  The :class:`.Column` object is also given its name"
+" explicitly, rather than it being taken from an assigned attribute name."
+msgstr ""
+
+#: ../../orm/tutorial.rst:1993
+msgid ""
+"Next we define ``BlogPost`` and ``Keyword``, using complementary "
+":func:`.relationship` constructs, each referring to the ``post_keywords``"
+" table as an association table::"
+msgstr ""
+
+#: ../../orm/tutorial.rst:2033
+msgid ""
+"The above class declarations illustrate explicit ``__init__()`` methods. "
+"Remember, when using Declarative, it's optional!"
+msgstr ""
+
+#: ../../orm/tutorial.rst:2036
+msgid ""
+"Above, the many-to-many relationship is ``BlogPost.keywords``. The "
+"defining feature of a many-to-many relationship is the ``secondary`` "
+"keyword argument which references a :class:`~sqlalchemy.schema.Table` "
+"object representing the association table. This table only contains "
+"columns which reference the two sides of the relationship; if it has "
+"*any* other columns, such as its own primary key, or foreign keys to "
+"other tables, SQLAlchemy requires a different usage pattern called the "
+"\"association object\", described at :ref:`association_pattern`."
+msgstr ""
+
+#: ../../orm/tutorial.rst:2045
+msgid ""
+"We would also like our ``BlogPost`` class to have an ``author`` field. We"
+" will add this as another bidirectional relationship, except one issue "
+"we'll have is that a single user might have lots of blog posts. When we "
+"access ``User.posts``, we'd like to be able to filter results further so "
+"as not to load the entire collection. For this we use a setting accepted "
+"by :func:`~sqlalchemy.orm.relationship` called ``lazy='dynamic'``, which "
+"configures an alternate **loader strategy** on the attribute:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:2058
+msgid "Create new tables:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:2092
+msgid ""
+"Usage is not too different from what we've been doing.  Let's give Wendy "
+"some blog posts:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:2110
+msgid ""
+"We're storing keywords uniquely in the database, but we know that we "
+"don't have any yet, so we can just create them:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:2118
+msgid ""
+"We can now look up all blog posts with the keyword 'firstpost'. We'll use"
+" the ``any`` operator to locate \"blog posts where any of its keywords "
+"has the keyword string 'firstpost'\":"
+msgstr ""
+
+#: ../../orm/tutorial.rst:2148
+msgid ""
+"If we want to look up posts owned by the user ``wendy``, we can tell the "
+"query to narrow down to that ``User`` object as a parent:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:2170
+msgid ""
+"Or we can use Wendy's own ``posts`` relationship, which is a \"dynamic\" "
+"relationship, to query straight from there:"
+msgstr ""
+
+#: ../../orm/tutorial.rst:2192
+msgid "Further Reference"
+msgstr ""
+
+#: ../../orm/tutorial.rst:2194
+msgid "Query Reference: :ref:`query_api_toplevel`"
+msgstr ""
+
+#: ../../orm/tutorial.rst:2196
+msgid "Mapper Reference: :ref:`mapper_config_toplevel`"
+msgstr ""
+
+#: ../../orm/tutorial.rst:2198
+msgid "Relationship Reference: :ref:`relationship_config_toplevel`"
+msgstr ""
+
+#: ../../orm/tutorial.rst:2200
+msgid "Session Reference: :doc:`/orm/session`"
+msgstr ""
+
