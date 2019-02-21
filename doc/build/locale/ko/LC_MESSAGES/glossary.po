@@ -500,7 +500,7 @@ msgstr ""
 
 #: ../../glossary.rst:285
 msgid "domain model"
-msgstr ""
+msgstr "도메인 모형"
 
 #: ../../glossary.rst:288
 msgid ""
@@ -512,7 +512,7 @@ msgstr ""
 
 #: ../../glossary.rst:294
 msgid "`Domain Model (wikipedia) <http://en.wikipedia.org/wiki/Domain_model>`_"
-msgstr ""
+msgstr "`도메인 모형 (위키피디아) <http://en.wikipedia.org/wiki/Domain_model>`_"
 
 #: ../../glossary.rst:547
 msgid "durability"
