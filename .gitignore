@@ -24,3 +24,5 @@ sqlnet.log
 .idea/
 !/doc/build/output/
 !/build/
+!/doc/build/output/
+!/build/
