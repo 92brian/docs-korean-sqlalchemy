@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ko" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ko" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>SQLAlchemy ORM &mdash; SQLAlchemy 1.3.0b1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="객체 관계형 튜토리얼(Object Relational Tutorial)" href="tutorial.html" />
+    <link rel="prev" title="Overview" href="../intro.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> SQLAlchemy
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SQLAlchemy ORM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html">객체 관계형 튜토리얼(Object Relational Tutorial)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapper_config.html">Mapper Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relationships.html">Relationship Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loading_objects.html">Loading Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session.html">Using the Session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extending.html">Events and Internals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/index.html">ORM Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">ORM Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../core/index.html">SQLAlchemy Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dialects/index.html">Dialects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../errors.html">Error Messages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog/index.html">Changes and Migration</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">SQLAlchemy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+      <li>SQLAlchemy ORM</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/VeranosTech/docs-korean-sqlalchemy/blob/docs-korean/doc/build/orm/index.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sqlalchemy-orm">
+<span id="orm-toplevel"></span><h1>SQLAlchemy ORM<a class="headerlink" href="#sqlalchemy-orm" title="제목 주소">¶</a></h1>
+<p>Here, the Object Relational Mapper is introduced and fully described. If you
+want to work with higher-level SQL which is constructed automatically for you,
+as well as automated persistence of Python objects, proceed first to the
+tutorial.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">객체 관계형 튜토리얼(Object Relational Tutorial)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#version-check">버전 확인(Version Check)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#connecting">연결(Connecting)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#declare-a-mapping">매핑 선언(Declare a Mapping)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#create-a-schema">스키마 생성(Create a Schema)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#create-an-instance-of-the-mapped-class">매핑된 클래스의 인스턴스 생성</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#creating-a-session">세션 생성(Creating a Session)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#adding-and-updating-objects">객체의 추가 및 갱신(Adding and Updating Objects)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#rolling-back">롤백 하기(Rolling Back)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#querying">쿼리하기(Querying)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#building-a-relationship">릴레이션 만들기(Building a Relationship)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#working-with-related-objects">관계형 객체로 작업하기(Working with Related Objects)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#querying-with-joins">Join으로 쿼리쓰기(Querying with Joins)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#eager-loading">Eager 로딩(Eager Loading)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#deleting">삭제하기(Deleting)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#building-a-many-to-many-relationship">Building a Many To Many Relationship</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#further-reference">더 읽어보기</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mapper_config.html">Mapper Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mapping_styles.html">Types of Mappings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scalar_mapping.html">Mapping Columns and Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inheritance.html">Mapping Class Inheritance Hierarchies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nonstandard_mappings.html">Non-Traditional Mappings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="versioning.html">Configuring a Version Counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapping_api.html">Class Mapping API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="relationships.html">Relationship Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basic_relationships.html">Basic Relationship Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="self_referential.html">Adjacency List Relationships</a></li>
+<li class="toctree-l2"><a class="reference internal" href="backref.html">Linking Relationships with Backref</a></li>
+<li class="toctree-l2"><a class="reference internal" href="join_conditions.html">Configuring how Relationship Joins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collections.html">Collection Configuration and Techniques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relationship_persistence.html">Special Relationship Persistence Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relationship_api.html">Relationships API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="loading_objects.html">Loading Objects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="loading_columns.html">Loading Columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loading_relationships.html">Relationship Loading Techniques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inheritance_loading.html">Loading Inheritance Hierarchies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constructors.html">Constructors and Object Initialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="query.html">Query API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="session.html">Using the Session</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="session_basics.html">Session Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_state_management.html">State Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cascades.html">Cascades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_transaction.html">Transactions and Connection Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="persistence_techniques.html">Additional Persistence Techniques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contextual.html">Contextual/Thread-local Sessions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_events.html">Tracking Object and Session Changes with Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_api.html">Session API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extending.html">Events and Internals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="events.html">ORM Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html">ORM Internals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">ORM Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deprecated.html">Deprecated ORM Event Interfaces</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extensions/index.html">ORM Extensions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="extensions/associationproxy.html">Association Proxy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/automap.html">Automap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/baked.html">Baked Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/declarative/index.html">Declarative</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/mutable.html">Mutation Tracking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/orderinglist.html">Ordering List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/horizontal_shard.html">Horizontal Sharding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/hybrid.html">Hybrid Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/indexable.html">Indexable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/instrumentation.html">Alternate Class Instrumentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">ORM Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#mapping-recipes">Mapping Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#inheritance-mapping-recipes">Inheritance Mapping Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#special-apis">Special APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#extending-the-orm">Extending the ORM</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tutorial.html" class="btn btn-neutral float-right" title="객체 관계형 튜토리얼(Object Relational Tutorial)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../intro.html" class="btn btn-neutral" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2018, the SQLAlchemy authors and contributors
+      최종 업데이트: 02/25/2019 20:06:54
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

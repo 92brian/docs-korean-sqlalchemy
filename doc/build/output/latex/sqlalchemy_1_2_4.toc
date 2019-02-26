@@ -1,0 +1,874 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Overview}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}Documentation Overview}{3}{section.1.1}
+\contentsline {section}{\numberline {1.2}Code Examples}{4}{section.1.2}
+\contentsline {section}{\numberline {1.3}Installation Guide}{4}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}Supported Platforms}{4}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}Supported Installation Methods}{4}{subsection.1.3.2}
+\contentsline {subsection}{\numberline {1.3.3}Install via pip}{4}{subsection.1.3.3}
+\contentsline {subsection}{\numberline {1.3.4}Installing using setup.py}{5}{subsection.1.3.4}
+\contentsline {subsection}{\numberline {1.3.5}Installing the C Extensions}{5}{subsection.1.3.5}
+\contentsline {subsection}{\numberline {1.3.6}Installing a Database API}{5}{subsection.1.3.6}
+\contentsline {subsection}{\numberline {1.3.7}Checking the Installed SQLAlchemy Version}{5}{subsection.1.3.7}
+\contentsline {section}{\numberline {1.4}1.1 to 1.2 Migration}{5}{section.1.4}
+\contentsline {chapter}{\numberline {2}SQLAlchemy ORM}{7}{chapter.2}
+\contentsline {section}{\numberline {2.1}Object Relational Tutorial}{7}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Version Check}{7}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Connecting}{7}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Declare a Mapping}{8}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}Create a Schema}{9}{subsection.2.1.4}
+\contentsline {subsection}{\numberline {2.1.5}Create an Instance of the Mapped Class}{10}{subsection.2.1.5}
+\contentsline {subsection}{\numberline {2.1.6}Creating a Session}{11}{subsection.2.1.6}
+\contentsline {subsection}{\numberline {2.1.7}Adding and Updating Objects}{12}{subsection.2.1.7}
+\contentsline {subsection}{\numberline {2.1.8}Rolling Back}{13}{subsection.2.1.8}
+\contentsline {subsection}{\numberline {2.1.9}Querying}{14}{subsection.2.1.9}
+\contentsline {subsubsection}{Common Filter Operators}{17}{subsubsection*.4}
+\contentsline {subsubsection}{Returning Lists and Scalars}{18}{subsubsection*.5}
+\contentsline {subsubsection}{Using Textual SQL}{19}{subsubsection*.6}
+\contentsline {subsubsection}{Counting}{21}{subsubsection*.7}
+\contentsline {subsection}{\numberline {2.1.10}Building a Relationship}{22}{subsection.2.1.10}
+\contentsline {subsection}{\numberline {2.1.11}Working with Related Objects}{23}{subsection.2.1.11}
+\contentsline {subsection}{\numberline {2.1.12}Querying with Joins}{24}{subsection.2.1.12}
+\contentsline {subsubsection}{Using Aliases}{25}{subsubsection*.8}
+\contentsline {subsubsection}{Using Subqueries}{26}{subsubsection*.9}
+\contentsline {subsubsection}{Selecting Entities from Subqueries}{27}{subsubsection*.10}
+\contentsline {subsubsection}{Using EXISTS}{27}{subsubsection*.11}
+\contentsline {subsubsection}{Common Relationship Operators}{28}{subsubsection*.12}
+\contentsline {subsection}{\numberline {2.1.13}Eager Loading}{29}{subsection.2.1.13}
+\contentsline {subsubsection}{Subquery Load}{29}{subsubsection*.13}
+\contentsline {subsubsection}{Joined Load}{30}{subsubsection*.14}
+\contentsline {subsubsection}{Explicit Join + Eagerload}{31}{subsubsection*.15}
+\contentsline {subsection}{\numberline {2.1.14}Deleting}{31}{subsection.2.1.14}
+\contentsline {subsubsection}{Configuring delete/delete-orphan Cascade}{32}{subsubsection*.16}
+\contentsline {subsection}{\numberline {2.1.15}Building a Many To Many Relationship}{34}{subsection.2.1.15}
+\contentsline {subsection}{\numberline {2.1.16}Further Reference}{37}{subsection.2.1.16}
+\contentsline {section}{\numberline {2.2}Mapper Configuration}{37}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Types of Mappings}{37}{subsection.2.2.1}
+\contentsline {subsubsection}{Declarative Mapping}{38}{subsubsection*.17}
+\contentsline {subsubsection}{Classical Mappings}{38}{subsubsection*.18}
+\contentsline {subsubsection}{Runtime Introspection of Mappings, Objects}{39}{subsubsection*.19}
+\contentsline {subsection}{\numberline {2.2.2}Mapping Columns and Expressions}{40}{subsection.2.2.2}
+\contentsline {subsubsection}{Mapping Table Columns}{40}{subsubsection*.22}
+\contentsline {paragraph}{Naming Columns Distinctly from Attribute Names}{40}{paragraph*.23}
+\contentsline {paragraph}{Automating Column Naming Schemes from Reflected Tables}{41}{paragraph*.24}
+\contentsline {paragraph}{Naming All Columns with a Prefix}{41}{paragraph*.25}
+\contentsline {paragraph}{Using column\_property for column level options}{41}{paragraph*.26}
+\contentsline {paragraph}{Mapping a Subset of Table Columns}{43}{paragraph*.37}
+\contentsline {subsubsection}{SQL Expressions as Mapped Attributes}{44}{subsubsection*.39}
+\contentsline {paragraph}{Using a Hybrid}{44}{paragraph*.40}
+\contentsline {paragraph}{Using column\_property}{45}{paragraph*.41}
+\contentsline {paragraph}{Using a plain descriptor}{46}{paragraph*.42}
+\contentsline {paragraph}{Query-time SQL expressions as mapped attributes}{47}{paragraph*.43}
+\contentsline {subsubsection}{Changing Attribute Behavior}{48}{subsubsection*.45}
+\contentsline {paragraph}{Simple Validators}{48}{paragraph*.46}
+\contentsline {paragraph}{Using Descriptors and Hybrids}{50}{paragraph*.51}
+\contentsline {paragraph}{Synonyms}{52}{paragraph*.52}
+\contentsline {paragraph}{Operator Customization}{54}{paragraph*.59}
+\contentsline {subsubsection}{Composite Column Types}{55}{subsubsection*.61}
+\contentsline {paragraph}{Tracking In-Place Mutations on Composites}{56}{paragraph*.72}
+\contentsline {paragraph}{Redefining Comparison Operations for Composites}{57}{paragraph*.73}
+\contentsline {subsection}{\numberline {2.2.3}Mapping Class Inheritance Hierarchies}{57}{subsection.2.2.3}
+\contentsline {subsubsection}{Joined Table Inheritance}{57}{subsubsection*.74}
+\contentsline {paragraph}{Relationships with Joined Inheritance}{59}{paragraph*.75}
+\contentsline {paragraph}{Loading Joined Inheritance Mappings}{60}{paragraph*.76}
+\contentsline {subsubsection}{Single Table Inheritance}{60}{subsubsection*.77}
+\contentsline {paragraph}{Relationships with Single Table Inheritance}{61}{paragraph*.78}
+\contentsline {paragraph}{Loading Single Inheritance Mappings}{62}{paragraph*.79}
+\contentsline {subsubsection}{Concrete Table Inheritance}{62}{subsubsection*.80}
+\contentsline {paragraph}{Concrete Polymorphic Loading Configuration}{63}{paragraph*.81}
+\contentsline {paragraph}{Abstract Concrete Classes}{65}{paragraph*.82}
+\contentsline {paragraph}{Classical and Semi-Classical Concrete Polymorphic Configuration}{66}{paragraph*.83}
+\contentsline {paragraph}{Relationships with Concrete Inheritance}{69}{paragraph*.84}
+\contentsline {paragraph}{Loading Concrete Inheritance Mappings}{71}{paragraph*.85}
+\contentsline {subsection}{\numberline {2.2.4}Non-Traditional Mappings}{71}{subsection.2.2.4}
+\contentsline {subsubsection}{Mapping a Class against Multiple Tables}{71}{subsubsection*.86}
+\contentsline {subsubsection}{Mapping a Class against Arbitrary Selects}{72}{subsubsection*.87}
+\contentsline {subsubsection}{Multiple Mappers for One Class}{72}{subsubsection*.88}
+\contentsline {subsection}{\numberline {2.2.5}Configuring a Version Counter}{73}{subsection.2.2.5}
+\contentsline {subsubsection}{Simple Version Counting}{74}{subsubsection*.89}
+\contentsline {subsubsection}{Custom Version Counters / Types}{74}{subsubsection*.90}
+\contentsline {subsubsection}{Server Side Version Counters}{75}{subsubsection*.91}
+\contentsline {subsubsection}{Programmatic or Conditional Version Counters}{76}{subsubsection*.92}
+\contentsline {subsection}{\numberline {2.2.6}Class Mapping API}{77}{subsection.2.2.6}
+\contentsline {section}{\numberline {2.3}Relationship Configuration}{91}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Basic Relationship Patterns}{91}{subsection.2.3.1}
+\contentsline {subsubsection}{One To Many}{91}{subsubsection*.183}
+\contentsline {subsubsection}{Many To One}{92}{subsubsection*.184}
+\contentsline {subsubsection}{One To One}{93}{subsubsection*.185}
+\contentsline {subsubsection}{Many To Many}{93}{subsubsection*.186}
+\contentsline {paragraph}{Deleting Rows from the Many to Many Table}{95}{paragraph*.187}
+\contentsline {subsubsection}{Association Object}{95}{subsubsection*.188}
+\contentsline {subsection}{\numberline {2.3.2}Adjacency List Relationships}{97}{subsection.2.3.2}
+\contentsline {subsubsection}{Composite Adjacency Lists}{98}{subsubsection*.189}
+\contentsline {subsubsection}{Self-Referential Query Strategies}{99}{subsubsection*.190}
+\contentsline {subsubsection}{Configuring Self-Referential Eager Loading}{100}{subsubsection*.191}
+\contentsline {subsection}{\numberline {2.3.3}Linking Relationships with Backref}{101}{subsection.2.3.3}
+\contentsline {subsubsection}{Backref Arguments}{102}{subsubsection*.192}
+\contentsline {subsubsection}{One Way Backrefs}{104}{subsubsection*.193}
+\contentsline {subsection}{\numberline {2.3.4}Configuring how Relationship Joins}{105}{subsection.2.3.4}
+\contentsline {subsubsection}{Handling Multiple Join Paths}{105}{subsubsection*.194}
+\contentsline {subsubsection}{Specifying Alternate Join Conditions}{106}{subsubsection*.195}
+\contentsline {subsubsection}{Creating Custom Foreign Conditions}{107}{subsubsection*.196}
+\contentsline {subsubsection}{Using custom operators in join conditions}{108}{subsubsection*.197}
+\contentsline {subsubsection}{Overlapping Foreign Keys}{109}{subsubsection*.198}
+\contentsline {subsubsection}{Non-relational Comparisons / Materialized Path}{111}{subsubsection*.199}
+\contentsline {subsubsection}{Self-Referential Many-to-Many Relationship}{111}{subsubsection*.200}
+\contentsline {subsubsection}{Composite “Secondary” Joins}{113}{subsubsection*.201}
+\contentsline {subsubsection}{Relationship to Non Primary Mapper}{114}{subsubsection*.202}
+\contentsline {subsubsection}{Building Query-Enabled Properties}{115}{subsubsection*.203}
+\contentsline {subsection}{\numberline {2.3.5}Collection Configuration and Techniques}{115}{subsection.2.3.5}
+\contentsline {subsubsection}{Working with Large Collections}{115}{subsubsection*.204}
+\contentsline {paragraph}{Dynamic Relationship Loaders}{115}{paragraph*.205}
+\contentsline {paragraph}{Setting Noload, RaiseLoad}{116}{paragraph*.206}
+\contentsline {paragraph}{Using Passive Deletes}{117}{paragraph*.207}
+\contentsline {subsubsection}{Customizing Collection Access}{117}{subsubsection*.208}
+\contentsline {paragraph}{Dictionary Collections}{118}{paragraph*.209}
+\contentsline {subsubsection}{Custom Collection Implementations}{120}{subsubsection*.213}
+\contentsline {paragraph}{Annotating Custom Collections via Decorators}{121}{paragraph*.214}
+\contentsline {paragraph}{Custom Dictionary-Based Collections}{125}{paragraph*.227}
+\contentsline {paragraph}{Instrumentation and Custom Types}{127}{paragraph*.236}
+\contentsline {subsubsection}{Collection Internals}{127}{subsubsection*.237}
+\contentsline {subsection}{\numberline {2.3.6}Special Relationship Persistence Patterns}{128}{subsection.2.3.6}
+\contentsline {subsubsection}{Rows that point to themselves / Mutually Dependent Rows}{128}{subsubsection*.248}
+\contentsline {subsubsection}{Mutable Primary Keys / Update Cascades}{130}{subsubsection*.249}
+\contentsline {paragraph}{Simulating limited ON UPDATE CASCADE without foreign key support}{131}{paragraph*.250}
+\contentsline {subsection}{\numberline {2.3.7}Relationships API}{132}{subsection.2.3.7}
+\contentsline {section}{\numberline {2.4}Loading Objects}{141}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Loading Columns}{141}{subsection.2.4.1}
+\contentsline {subsubsection}{Deferred Column Loading}{142}{subsubsection*.289}
+\contentsline {paragraph}{Load Only Cols}{143}{paragraph*.290}
+\contentsline {paragraph}{Deferred Loading with Multiple Entities}{143}{paragraph*.291}
+\contentsline {paragraph}{Column Deferral API}{143}{paragraph*.292}
+\contentsline {subsubsection}{Column Bundles}{146}{subsubsection*.308}
+\contentsline {subsection}{\numberline {2.4.2}Relationship Loading Techniques}{147}{subsection.2.4.2}
+\contentsline {subsubsection}{Configuring Loader Strategies at Mapping Time}{148}{subsubsection*.309}
+\contentsline {subsubsection}{Controlling Loading via Options}{148}{subsubsection*.310}
+\contentsline {subsubsection}{Lazy Loading}{149}{subsubsection*.311}
+\contentsline {paragraph}{Preventing unwanted lazy loads using raiseload}{149}{paragraph*.312}
+\contentsline {subsubsection}{Joined Eager Loading}{150}{subsubsection*.313}
+\contentsline {paragraph}{Joined eager loading and result set batching}{151}{paragraph*.314}
+\contentsline {paragraph}{The Zen of Joined Eager Loading}{152}{paragraph*.315}
+\contentsline {subsubsection}{Subquery Eager Loading}{154}{subsubsection*.316}
+\contentsline {paragraph}{The Importance of Ordering}{155}{paragraph*.317}
+\contentsline {subsubsection}{Select IN loading}{155}{subsubsection*.318}
+\contentsline {subsubsection}{What Kind of Loading to Use ?}{157}{subsubsection*.319}
+\contentsline {subsubsection}{Polymorphic Eager Loading}{158}{subsubsection*.320}
+\contentsline {subsubsection}{Wildcard Loading Strategies}{158}{subsubsection*.321}
+\contentsline {paragraph}{Per-Entity Wildcard Loading Strategies}{159}{paragraph*.322}
+\contentsline {subsubsection}{Routing Explicit Joins/Statements into Eagerly Loaded Collections}{159}{subsubsection*.324}
+\contentsline {paragraph}{Using contains\_eager() to load a custom-filtered collection result}{160}{paragraph*.325}
+\contentsline {paragraph}{Advanced Usage with Arbitrary Statements}{161}{paragraph*.326}
+\contentsline {subsubsection}{Creating Custom Load Rules}{161}{subsubsection*.327}
+\contentsline {subsubsection}{Relationship Loader API}{162}{subsubsection*.328}
+\contentsline {subsection}{\numberline {2.4.3}Loading Inheritance Hierarchies}{168}{subsection.2.4.3}
+\contentsline {subsubsection}{Using with\_polymorphic}{168}{subsubsection*.348}
+\contentsline {paragraph}{Using aliasing with with\_polymorphic}{169}{paragraph*.349}
+\contentsline {paragraph}{Referring to Specific Subclass Attributes}{171}{paragraph*.350}
+\contentsline {paragraph}{Setting with\_polymorphic at mapper configuration time}{171}{paragraph*.351}
+\contentsline {paragraph}{Setting with\_polymorphic against a query}{172}{paragraph*.352}
+\contentsline {subsubsection}{Polymorphic Selectin Loading}{173}{subsubsection*.353}
+\contentsline {paragraph}{Combining selectin and with\_polymorphic}{174}{paragraph*.354}
+\contentsline {subsubsection}{Referring to specific subtypes on relationships}{176}{subsubsection*.355}
+\contentsline {paragraph}{Eager Loading of Specific or Polymorphic Subtypes}{177}{paragraph*.356}
+\contentsline {subsubsection}{Loading objects with joined table inheritance}{178}{subsubsection*.357}
+\contentsline {subsubsection}{Loading objects with single table inheritance}{179}{subsubsection*.358}
+\contentsline {subsubsection}{Inheritance Loading API}{180}{subsubsection*.359}
+\contentsline {subsection}{\numberline {2.4.4}Constructors and Object Initialization}{181}{subsection.2.4.4}
+\contentsline {subsection}{\numberline {2.4.5}Query API}{182}{subsection.2.4.5}
+\contentsline {subsubsection}{The Query Object}{182}{subsubsection*.374}
+\contentsline {subsubsection}{ORM-Specific Query Constructs}{207}{subsubsection*.467}
+\contentsline {section}{\numberline {2.5}Using the Session}{213}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}Session Basics}{213}{subsection.2.5.1}
+\contentsline {subsubsection}{What does the Session do ?}{213}{subsubsection*.509}
+\contentsline {subsubsection}{Getting a Session}{214}{subsubsection*.510}
+\contentsline {paragraph}{Adding Additional Configuration to an Existing sessionmaker()}{214}{paragraph*.511}
+\contentsline {paragraph}{Creating Ad-Hoc Session Objects with Alternate Arguments}{215}{paragraph*.512}
+\contentsline {subsubsection}{Session Frequently Asked Questions}{215}{subsubsection*.513}
+\contentsline {paragraph}{When do I make a \sphinxstyleliteralintitle {sessionmaker}?}{215}{paragraph*.514}
+\contentsline {paragraph}{When do I construct a \sphinxstyleliteralintitle {Session}, when do I commit it, and when do I close it?}{216}{paragraph*.515}
+\contentsline {paragraph}{Is the Session a cache?}{218}{paragraph*.516}
+\contentsline {paragraph}{How can I get the \sphinxstyleliteralintitle {Session} for a certain object?}{219}{paragraph*.517}
+\contentsline {paragraph}{Is the session thread-safe?}{219}{paragraph*.518}
+\contentsline {subsubsection}{Basics of Using a Session}{219}{subsubsection*.519}
+\contentsline {paragraph}{Querying}{219}{paragraph*.520}
+\contentsline {paragraph}{Adding New or Existing Items}{220}{paragraph*.521}
+\contentsline {paragraph}{Deleting}{220}{paragraph*.522}
+\contentsline {subparagraph}{Deleting Objects Referenced from Collections and Scalar Relationships}{220}{subparagraph*.523}
+\contentsline {subparagraph}{Deleting based on Filter Criterion}{222}{subparagraph*.524}
+\contentsline {paragraph}{Flushing}{222}{paragraph*.525}
+\contentsline {paragraph}{Committing}{223}{paragraph*.526}
+\contentsline {paragraph}{Rolling Back}{223}{paragraph*.527}
+\contentsline {paragraph}{Closing}{224}{paragraph*.528}
+\contentsline {subsection}{\numberline {2.5.2}State Management}{224}{subsection.2.5.2}
+\contentsline {subsubsection}{Quickie Intro to Object States}{224}{subsubsection*.529}
+\contentsline {paragraph}{Getting the Current State of an Object}{224}{paragraph*.530}
+\contentsline {subsubsection}{Session Attributes}{225}{subsubsection*.531}
+\contentsline {subsubsection}{Session Referencing Behavior}{225}{subsubsection*.532}
+\contentsline {subsubsection}{Merging}{226}{subsubsection*.533}
+\contentsline {paragraph}{Merge Tips}{227}{paragraph*.534}
+\contentsline {subsubsection}{Expunging}{229}{subsubsection*.535}
+\contentsline {subsubsection}{Refreshing / Expiring}{229}{subsubsection*.536}
+\contentsline {paragraph}{What Actually Loads}{231}{paragraph*.537}
+\contentsline {paragraph}{When to Expire or Refresh}{231}{paragraph*.538}
+\contentsline {subsection}{\numberline {2.5.3}Cascades}{232}{subsection.2.5.3}
+\contentsline {subsubsection}{save-update}{233}{subsubsection*.539}
+\contentsline {subsubsection}{delete}{234}{subsubsection*.540}
+\contentsline {subsubsection}{delete-orphan}{236}{subsubsection*.541}
+\contentsline {subsubsection}{merge}{236}{subsubsection*.542}
+\contentsline {subsubsection}{refresh-expire}{236}{subsubsection*.543}
+\contentsline {subsubsection}{expunge}{236}{subsubsection*.544}
+\contentsline {subsubsection}{Controlling Cascade on Backrefs}{236}{subsubsection*.545}
+\contentsline {subsection}{\numberline {2.5.4}Transactions and Connection Management}{237}{subsection.2.5.4}
+\contentsline {subsubsection}{Managing Transactions}{237}{subsubsection*.546}
+\contentsline {paragraph}{Using SAVEPOINT}{238}{paragraph*.547}
+\contentsline {paragraph}{Autocommit Mode}{239}{paragraph*.548}
+\contentsline {subparagraph}{Using Subtransactions with Autocommit}{240}{subparagraph*.549}
+\contentsline {paragraph}{Enabling Two-Phase Commit}{241}{paragraph*.550}
+\contentsline {paragraph}{Setting Transaction Isolation Levels}{241}{paragraph*.551}
+\contentsline {subparagraph}{Setting Isolation Engine-Wide}{241}{subparagraph*.552}
+\contentsline {subparagraph}{Setting Isolation for Individual Sessions}{242}{subparagraph*.553}
+\contentsline {subparagraph}{Setting Isolation for Individual Transactions}{242}{subparagraph*.554}
+\contentsline {paragraph}{Tracking Transaction State with Events}{243}{paragraph*.555}
+\contentsline {subsubsection}{Joining a Session into an External Transaction (such as for test suites)}{243}{subsubsection*.556}
+\contentsline {subsection}{\numberline {2.5.5}Additional Persistence Techniques}{245}{subsection.2.5.5}
+\contentsline {subsubsection}{Embedding SQL Insert/Update Expressions into a Flush}{245}{subsubsection*.557}
+\contentsline {subsubsection}{Using SQL Expressions with Sessions}{245}{subsubsection*.558}
+\contentsline {subsubsection}{Forcing NULL on a column with a default}{246}{subsubsection*.559}
+\contentsline {subsubsection}{Partitioning Strategies}{247}{subsubsection*.560}
+\contentsline {paragraph}{Simple Vertical Partitioning}{247}{paragraph*.561}
+\contentsline {paragraph}{Custom Vertical Partitioning}{247}{paragraph*.562}
+\contentsline {paragraph}{Horizontal Partitioning}{248}{paragraph*.563}
+\contentsline {subsubsection}{Bulk Operations}{248}{subsubsection*.564}
+\contentsline {paragraph}{Usage}{249}{paragraph*.565}
+\contentsline {paragraph}{Comparison to Core Insert / Update Constructs}{249}{paragraph*.566}
+\contentsline {paragraph}{ORM Compatibility}{250}{paragraph*.567}
+\contentsline {subsection}{\numberline {2.5.6}Contextual/Thread-local Sessions}{250}{subsection.2.5.6}
+\contentsline {subsubsection}{Implicit Method Access}{251}{subsubsection*.568}
+\contentsline {subsubsection}{Thread-Local Scope}{252}{subsubsection*.569}
+\contentsline {subsubsection}{Using Thread-Local Scope with Web Applications}{252}{subsubsection*.570}
+\contentsline {subsubsection}{Using Custom Created Scopes}{253}{subsubsection*.571}
+\contentsline {subsubsection}{Contextual Session API}{254}{subsubsection*.572}
+\contentsline {subsection}{\numberline {2.5.7}Tracking Object and Session Changes with Events}{255}{subsection.2.5.7}
+\contentsline {subsubsection}{Persistence Events}{255}{subsubsection*.585}
+\contentsline {paragraph}{\sphinxstyleliteralintitle {before\_flush()}}{255}{paragraph*.586}
+\contentsline {paragraph}{\sphinxstyleliteralintitle {after\_flush()}}{255}{paragraph*.587}
+\contentsline {paragraph}{\sphinxstyleliteralintitle {after\_flush\_postexec()}}{255}{paragraph*.588}
+\contentsline {paragraph}{Mapper-level Events}{256}{paragraph*.589}
+\contentsline {subsubsection}{Object Lifecycle Events}{257}{subsubsection*.590}
+\contentsline {paragraph}{Transient}{257}{paragraph*.591}
+\contentsline {paragraph}{Transient to Pending}{258}{paragraph*.592}
+\contentsline {paragraph}{Pending to Persistent}{258}{paragraph*.593}
+\contentsline {paragraph}{Pending to Transient}{258}{paragraph*.594}
+\contentsline {paragraph}{Loaded as Persistent}{258}{paragraph*.595}
+\contentsline {paragraph}{Persistent to Transient}{258}{paragraph*.596}
+\contentsline {paragraph}{Persistent to Deleted}{259}{paragraph*.597}
+\contentsline {paragraph}{Deleted to Detached}{259}{paragraph*.598}
+\contentsline {paragraph}{Persistent to Detached}{259}{paragraph*.599}
+\contentsline {paragraph}{Detached to Persistent}{260}{paragraph*.600}
+\contentsline {paragraph}{Deleted to Persistent}{260}{paragraph*.601}
+\contentsline {subsubsection}{Transaction Events}{260}{subsubsection*.602}
+\contentsline {subsubsection}{Attribute Change Events}{260}{subsubsection*.603}
+\contentsline {subsection}{\numberline {2.5.8}Session API}{260}{subsection.2.5.8}
+\contentsline {subsubsection}{Session and sessionmaker()}{261}{subsubsection*.605}
+\contentsline {subsubsection}{Session Utilities}{277}{subsubsection*.691}
+\contentsline {subsubsection}{Attribute and State Management Utilities}{278}{subsubsection*.696}
+\contentsline {section}{\numberline {2.6}Events and Internals}{281}{section.2.6}
+\contentsline {subsection}{\numberline {2.6.1}ORM Events}{281}{subsection.2.6.1}
+\contentsline {subsubsection}{Attribute Events}{281}{subsubsection*.721}
+\contentsline {subsubsection}{Mapper Events}{287}{subsubsection*.756}
+\contentsline {subsubsection}{Instance Events}{296}{subsubsection*.793}
+\contentsline {subsubsection}{Session Events}{301}{subsubsection*.826}
+\contentsline {subsubsection}{Query Events}{313}{subsubsection*.888}
+\contentsline {subsubsection}{Instrumentation Events}{314}{subsubsection*.891}
+\contentsline {subsection}{\numberline {2.6.2}ORM Internals}{315}{subsection.2.6.2}
+\contentsline {subsection}{\numberline {2.6.3}ORM Exceptions}{363}{subsection.2.6.3}
+\contentsline {subsection}{\numberline {2.6.4}Deprecated ORM Event Interfaces}{364}{subsection.2.6.4}
+\contentsline {subsubsection}{Mapper Events}{364}{subsubsection*.1247}
+\contentsline {subsubsection}{Session Events}{367}{subsubsection*.1259}
+\contentsline {subsubsection}{Attribute Events}{368}{subsubsection*.1271}
+\contentsline {section}{\numberline {2.7}ORM Extensions}{369}{section.2.7}
+\contentsline {subsection}{\numberline {2.7.1}Association Proxy}{369}{subsection.2.7.1}
+\contentsline {subsubsection}{Simplifying Scalar Collections}{369}{subsubsection*.1278}
+\contentsline {subsubsection}{Creation of New Values}{371}{subsubsection*.1279}
+\contentsline {subsubsection}{Simplifying Association Objects}{371}{subsubsection*.1280}
+\contentsline {subsubsection}{Proxying to Dictionary Based Collections}{373}{subsubsection*.1281}
+\contentsline {subsubsection}{Composite Association Proxies}{374}{subsubsection*.1282}
+\contentsline {subsubsection}{Querying with Association Proxies}{375}{subsubsection*.1283}
+\contentsline {subsubsection}{API Documentation}{376}{subsubsection*.1284}
+\contentsline {subsection}{\numberline {2.7.2}Automap}{379}{subsection.2.7.2}
+\contentsline {subsubsection}{Basic Use}{379}{subsubsection*.1309}
+\contentsline {subsubsection}{Generating Mappings from an Existing MetaData}{380}{subsubsection*.1310}
+\contentsline {subsubsection}{Specifying Classes Explicitly}{380}{subsubsection*.1311}
+\contentsline {subsubsection}{Overriding Naming Schemes}{381}{subsubsection*.1312}
+\contentsline {subsubsection}{Relationship Detection}{382}{subsubsection*.1313}
+\contentsline {paragraph}{Custom Relationship Arguments}{383}{paragraph*.1314}
+\contentsline {paragraph}{Many-to-Many relationships}{383}{paragraph*.1315}
+\contentsline {paragraph}{Relationships with Inheritance}{384}{paragraph*.1316}
+\contentsline {paragraph}{Handling Simple Naming Conflicts}{384}{paragraph*.1317}
+\contentsline {subsubsection}{Using Automap with Explicit Declarations}{385}{subsubsection*.1318}
+\contentsline {subsubsection}{API Reference}{386}{subsubsection*.1319}
+\contentsline {subsection}{\numberline {2.7.3}Baked Queries}{389}{subsection.2.7.3}
+\contentsline {subsubsection}{Synopsis}{389}{subsubsection*.1356}
+\contentsline {subsubsection}{Performance}{390}{subsubsection*.1357}
+\contentsline {subsubsection}{Rationale}{391}{subsubsection*.1358}
+\contentsline {subsubsection}{Disabling Baked Queries Session-wide}{394}{subsubsection*.1359}
+\contentsline {subsubsection}{Lazy Loading Integration}{394}{subsubsection*.1360}
+\contentsline {paragraph}{Opting out with the bake\_queries flag}{394}{paragraph*.1361}
+\contentsline {subsubsection}{API Documentation}{394}{subsubsection*.1362}
+\contentsline {subsection}{\numberline {2.7.4}Declarative}{396}{subsection.2.7.4}
+\contentsline {subsubsection}{Basic Use}{396}{subsubsection*.1382}
+\contentsline {paragraph}{Defining Attributes}{397}{paragraph*.1383}
+\contentsline {paragraph}{Accessing the MetaData}{397}{paragraph*.1384}
+\contentsline {paragraph}{Class Constructor}{397}{paragraph*.1385}
+\contentsline {paragraph}{Mapper Configuration}{398}{paragraph*.1386}
+\contentsline {paragraph}{Defining SQL Expressions}{398}{paragraph*.1387}
+\contentsline {subsubsection}{Configuring Relationships}{398}{subsubsection*.1388}
+\contentsline {paragraph}{Configuring Many-to-Many Relationships}{399}{paragraph*.1389}
+\contentsline {subsubsection}{Table Configuration}{400}{subsubsection*.1390}
+\contentsline {paragraph}{Using a Hybrid Approach with \_\_table\_\_}{400}{paragraph*.1391}
+\contentsline {paragraph}{Using Reflection with Declarative}{401}{paragraph*.1392}
+\contentsline {subsubsection}{Inheritance Configuration}{402}{subsubsection*.1393}
+\contentsline {paragraph}{Joined Table Inheritance}{402}{paragraph*.1394}
+\contentsline {paragraph}{Single Table Inheritance}{403}{paragraph*.1395}
+\contentsline {subparagraph}{Resolving Column Conflicts}{403}{subparagraph*.1396}
+\contentsline {paragraph}{Concrete Table Inheritance}{405}{paragraph*.1397}
+\contentsline {subsubsection}{Mixin and Custom Base Classes}{406}{subsubsection*.1398}
+\contentsline {paragraph}{Augmenting the Base}{406}{paragraph*.1399}
+\contentsline {paragraph}{Mixing in Columns}{407}{paragraph*.1400}
+\contentsline {paragraph}{Mixing in Relationships}{408}{paragraph*.1401}
+\contentsline {subparagraph}{Using Advanced Relationship Arguments (e.g. \sphinxstyleliteralintitle {primaryjoin}, etc.)}{408}{subparagraph*.1402}
+\contentsline {paragraph}{Mixing in deferred(), column\_property(), and other MapperProperty classes}{409}{paragraph*.1403}
+\contentsline {paragraph}{Mixing in Association Proxy and Other Attributes}{410}{paragraph*.1404}
+\contentsline {paragraph}{Controlling table inheritance with mixins}{411}{paragraph*.1405}
+\contentsline {paragraph}{Mixing in Columns in Inheritance Scenarios}{412}{paragraph*.1406}
+\contentsline {paragraph}{Combining Table/Mapper Arguments from Multiple Mixins}{413}{paragraph*.1407}
+\contentsline {paragraph}{Creating Indexes with Mixins}{413}{paragraph*.1408}
+\contentsline {subsubsection}{Declarative API}{413}{subsubsection*.1410}
+\contentsline {paragraph}{API Reference}{414}{paragraph*.1411}
+\contentsline {subparagraph}{Special Directives}{420}{subparagraph*.1433}
+\contentsline {subparagraph}{\sphinxstyleliteralintitle {\_\_declare\_last\_\_()}}{420}{subparagraph*.1434}
+\contentsline {subparagraph}{\sphinxstyleliteralintitle {\_\_declare\_first\_\_()}}{420}{subparagraph*.1435}
+\contentsline {subparagraph}{\sphinxstyleliteralintitle {\_\_abstract\_\_}}{420}{subparagraph*.1436}
+\contentsline {subparagraph}{\sphinxstyleliteralintitle {\_\_table\_cls\_\_}}{421}{subparagraph*.1437}
+\contentsline {subsection}{\numberline {2.7.5}Mutation Tracking}{422}{subsection.2.7.5}
+\contentsline {subsubsection}{Establishing Mutability on Scalar Column Values}{422}{subsubsection*.1438}
+\contentsline {paragraph}{Supporting Pickling}{424}{paragraph*.1439}
+\contentsline {paragraph}{Receiving Events}{425}{paragraph*.1440}
+\contentsline {subsubsection}{Establishing Mutability on Composites}{425}{subsubsection*.1441}
+\contentsline {paragraph}{Coercing Mutable Composites}{426}{paragraph*.1442}
+\contentsline {paragraph}{Supporting Pickling}{427}{paragraph*.1443}
+\contentsline {subsubsection}{API Reference}{427}{subsubsection*.1444}
+\contentsline {subsection}{\numberline {2.7.6}Ordering List}{431}{subsection.2.7.6}
+\contentsline {subsubsection}{API Reference}{432}{subsubsection*.1491}
+\contentsline {subsection}{\numberline {2.7.7}Horizontal Sharding}{433}{subsection.2.7.7}
+\contentsline {subsubsection}{API Documentation}{434}{subsubsection*.1504}
+\contentsline {subsection}{\numberline {2.7.8}Hybrid Attributes}{434}{subsection.2.7.8}
+\contentsline {subsubsection}{Defining Expression Behavior Distinct from Attribute Behavior}{436}{subsubsection*.1508}
+\contentsline {subsubsection}{Defining Setters}{436}{subsubsection*.1509}
+\contentsline {subsubsection}{Allowing Bulk ORM Update}{437}{subsubsection*.1510}
+\contentsline {subsubsection}{Working with Relationships}{437}{subsubsection*.1511}
+\contentsline {paragraph}{Join-Dependent Relationship Hybrid}{437}{paragraph*.1512}
+\contentsline {paragraph}{Correlated Subquery Relationship Hybrid}{439}{paragraph*.1513}
+\contentsline {subsubsection}{Building Custom Comparators}{439}{subsubsection*.1514}
+\contentsline {subsubsection}{Reusing Hybrid Properties across Subclasses}{440}{subsubsection*.1515}
+\contentsline {subsubsection}{Hybrid Value Objects}{441}{subsubsection*.1516}
+\contentsline {subsubsection}{Building Transformers}{443}{subsubsection*.1517}
+\contentsline {subsubsection}{API Reference}{445}{subsubsection*.1518}
+\contentsline {subsection}{\numberline {2.7.9}Indexable}{447}{subsection.2.7.9}
+\contentsline {subsubsection}{Synopsis}{447}{subsubsection*.1532}
+\contentsline {subsubsection}{Default Values}{449}{subsubsection*.1533}
+\contentsline {subsubsection}{Subclassing}{449}{subsubsection*.1534}
+\contentsline {subsubsection}{API Reference}{450}{subsubsection*.1535}
+\contentsline {subsection}{\numberline {2.7.10}Alternate Class Instrumentation}{450}{subsection.2.7.10}
+\contentsline {subsubsection}{API Reference}{451}{subsubsection*.1537}
+\contentsline {section}{\numberline {2.8}ORM Examples}{452}{section.2.8}
+\contentsline {subsection}{\numberline {2.8.1}Mapping Recipes}{452}{subsection.2.8.1}
+\contentsline {subsubsection}{Adjacency List}{452}{subsubsection*.1559}
+\contentsline {subsubsection}{Associations}{452}{subsubsection*.1560}
+\contentsline {subsubsection}{Directed Graphs}{452}{subsubsection*.1561}
+\contentsline {subsubsection}{Dynamic Relations as Dictionaries}{453}{subsubsection*.1562}
+\contentsline {subsubsection}{Generic Associations}{453}{subsubsection*.1563}
+\contentsline {subsubsection}{Large Collections}{453}{subsubsection*.1564}
+\contentsline {subsubsection}{Materialized Paths}{453}{subsubsection*.1565}
+\contentsline {subsubsection}{Nested Sets}{453}{subsubsection*.1566}
+\contentsline {subsubsection}{Performance}{453}{subsubsection*.1567}
+\contentsline {paragraph}{File Listing}{454}{paragraph*.1568}
+\contentsline {paragraph}{Running all tests with time}{454}{paragraph*.1569}
+\contentsline {paragraph}{Dumping Profiles for Individual Tests}{455}{paragraph*.1570}
+\contentsline {paragraph}{Using RunSnake}{455}{paragraph*.1571}
+\contentsline {paragraph}{Writing your Own Suites}{455}{paragraph*.1572}
+\contentsline {subsubsection}{Relationship Join Conditions}{457}{subsubsection*.1573}
+\contentsline {subsubsection}{XML Persistence}{457}{subsubsection*.1574}
+\contentsline {subsubsection}{Versioning Objects}{457}{subsubsection*.1575}
+\contentsline {paragraph}{Versioning with a History Table}{457}{paragraph*.1576}
+\contentsline {paragraph}{Versioning using Temporal Rows}{458}{paragraph*.1577}
+\contentsline {subsubsection}{Vertical Attribute Mapping}{458}{subsubsection*.1578}
+\contentsline {subsection}{\numberline {2.8.2}Inheritance Mapping Recipes}{459}{subsection.2.8.2}
+\contentsline {subsubsection}{Basic Inheritance Mappings}{459}{subsubsection*.1579}
+\contentsline {subsection}{\numberline {2.8.3}Special APIs}{459}{subsection.2.8.3}
+\contentsline {subsubsection}{Attribute Instrumentation}{459}{subsubsection*.1580}
+\contentsline {subsubsection}{Horizontal Sharding}{459}{subsubsection*.1581}
+\contentsline {subsection}{\numberline {2.8.4}Extending the ORM}{459}{subsection.2.8.4}
+\contentsline {subsubsection}{Dogpile Caching}{459}{subsubsection*.1582}
+\contentsline {subsubsection}{PostGIS Integration}{460}{subsubsection*.1583}
+\contentsline {chapter}{\numberline {3}SQLAlchemy core}{463}{chapter.3}
+\contentsline {section}{\numberline {3.1}SQL Expression Language Tutorial}{463}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Version Check}{463}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Connecting}{464}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}Define and Create Tables}{464}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.4}Insert Expressions}{466}{subsection.3.1.4}
+\contentsline {subsection}{\numberline {3.1.5}Executing}{466}{subsection.3.1.5}
+\contentsline {subsection}{\numberline {3.1.6}Executing Multiple Statements}{467}{subsection.3.1.6}
+\contentsline {subsection}{\numberline {3.1.7}Selecting}{468}{subsection.3.1.7}
+\contentsline {subsection}{\numberline {3.1.8}Operators}{470}{subsection.3.1.8}
+\contentsline {subsubsection}{Operator Customization}{471}{subsubsection*.1584}
+\contentsline {subsection}{\numberline {3.1.9}Conjunctions}{471}{subsection.3.1.9}
+\contentsline {subsection}{\numberline {3.1.10}Using Textual SQL}{473}{subsection.3.1.10}
+\contentsline {subsubsection}{Specifying Bound Parameter Behaviors}{473}{subsubsection*.1585}
+\contentsline {subsubsection}{Specifying Result-Column Behaviors}{474}{subsubsection*.1586}
+\contentsline {subsubsection}{Using text() fragments inside bigger statements}{475}{subsubsection*.1587}
+\contentsline {subsubsection}{Using More Specific Text with \sphinxstyleliteralintitle {table()}, \sphinxstyleliteralintitle {literal\_column()}, and \sphinxstyleliteralintitle {column()}}{475}{subsubsection*.1588}
+\contentsline {subsubsection}{Ordering or Grouping by a Label}{476}{subsubsection*.1589}
+\contentsline {subsection}{\numberline {3.1.11}Using Aliases}{477}{subsection.3.1.11}
+\contentsline {subsection}{\numberline {3.1.12}Using Joins}{478}{subsection.3.1.12}
+\contentsline {subsection}{\numberline {3.1.13}Everything Else}{479}{subsection.3.1.13}
+\contentsline {subsubsection}{Bind Parameter Objects}{479}{subsubsection*.1590}
+\contentsline {subsubsection}{Functions}{480}{subsubsection*.1591}
+\contentsline {subsubsection}{Window Functions}{481}{subsubsection*.1592}
+\contentsline {subsubsection}{Unions and Other Set Operations}{482}{subsubsection*.1593}
+\contentsline {subsubsection}{Scalar Selects}{484}{subsubsection*.1594}
+\contentsline {subsubsection}{Correlated Subqueries}{484}{subsubsection*.1595}
+\contentsline {paragraph}{LATERAL correlation}{486}{paragraph*.1596}
+\contentsline {subsubsection}{Ordering, Grouping, Limiting, Offset…ing…}{486}{subsubsection*.1597}
+\contentsline {subsection}{\numberline {3.1.14}Inserts, Updates and Deletes}{488}{subsection.3.1.14}
+\contentsline {subsubsection}{Correlated Updates}{489}{subsubsection*.1598}
+\contentsline {subsubsection}{Multiple Table Updates}{489}{subsubsection*.1599}
+\contentsline {subsubsection}{Parameter-Ordered Updates}{490}{subsubsection*.1600}
+\contentsline {subsubsection}{Deletes}{490}{subsubsection*.1601}
+\contentsline {subsubsection}{Multiple Table Deletes}{491}{subsubsection*.1602}
+\contentsline {subsubsection}{Matched Row Counts}{491}{subsubsection*.1603}
+\contentsline {subsection}{\numberline {3.1.15}Further Reference}{491}{subsection.3.1.15}
+\contentsline {section}{\numberline {3.2}SQL Statements and Expressions API}{492}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Column Elements and Expressions}{492}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Selectables, Tables, FROM objects}{546}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Insert, Updates, Deletes}{631}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}SQL and Generic Functions}{668}{subsection.3.2.4}
+\contentsline {subsection}{\numberline {3.2.5}Custom SQL Constructs and Compilation Extension}{677}{subsection.3.2.5}
+\contentsline {subsubsection}{Synopsis}{677}{subsubsection*.2841}
+\contentsline {subsubsection}{Dialect-specific compilation rules}{678}{subsubsection*.2842}
+\contentsline {subsubsection}{Compiling sub-elements of a custom expression construct}{678}{subsubsection*.2843}
+\contentsline {paragraph}{Cross Compiling between SQL and DDL compilers}{679}{paragraph*.2844}
+\contentsline {subsubsection}{Enabling Autocommit on a Construct}{679}{subsubsection*.2845}
+\contentsline {subsubsection}{Changing the default compilation of existing constructs}{680}{subsubsection*.2846}
+\contentsline {subsubsection}{Changing Compilation of Types}{680}{subsubsection*.2847}
+\contentsline {subsubsection}{Subclassing Guidelines}{680}{subsubsection*.2848}
+\contentsline {subsubsection}{Further Examples}{681}{subsubsection*.2849}
+\contentsline {paragraph}{“UTC timestamp” function}{681}{paragraph*.2850}
+\contentsline {paragraph}{“GREATEST” function}{682}{paragraph*.2851}
+\contentsline {paragraph}{“false” expression}{682}{paragraph*.2852}
+\contentsline {subsection}{\numberline {3.2.6}Expression Serializer Extension}{683}{subsection.3.2.6}
+\contentsline {section}{\numberline {3.3}Schema Definition Language}{684}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Describing Databases with MetaData}{684}{subsection.3.3.1}
+\contentsline {subsubsection}{Accessing Tables and Columns}{685}{subsubsection*.2861}
+\contentsline {subsubsection}{Creating and Dropping Database Tables}{686}{subsubsection*.2862}
+\contentsline {subsubsection}{Altering Schemas through Migrations}{687}{subsubsection*.2863}
+\contentsline {subsubsection}{Specifying the Schema Name}{688}{subsubsection*.2864}
+\contentsline {subsubsection}{Backend-Specific Options}{688}{subsubsection*.2865}
+\contentsline {subsubsection}{Column, Table, MetaData API}{688}{subsubsection*.2866}
+\contentsline {subsection}{\numberline {3.3.2}Reflecting Database Objects}{712}{subsection.3.3.2}
+\contentsline {subsubsection}{Overriding Reflected Columns}{713}{subsubsection*.3045}
+\contentsline {subsubsection}{Reflecting Views}{713}{subsubsection*.3046}
+\contentsline {subsubsection}{Reflecting All Tables at Once}{713}{subsubsection*.3047}
+\contentsline {subsubsection}{Fine Grained Reflection with Inspector}{713}{subsubsection*.3048}
+\contentsline {subsubsection}{Limitations of Reflection}{718}{subsubsection*.3090}
+\contentsline {subsection}{\numberline {3.3.3}Column Insert/Update Defaults}{719}{subsection.3.3.3}
+\contentsline {subsubsection}{Scalar Defaults}{719}{subsubsection*.3093}
+\contentsline {subsubsection}{Python-Executed Functions}{719}{subsubsection*.3094}
+\contentsline {paragraph}{Context-Sensitive Default Functions}{720}{paragraph*.3095}
+\contentsline {subsubsection}{SQL Expressions}{720}{subsubsection*.3096}
+\contentsline {subsubsection}{Server Side Defaults}{721}{subsubsection*.3097}
+\contentsline {subsubsection}{Triggered Columns}{722}{subsubsection*.3098}
+\contentsline {subsubsection}{Defining Sequences}{722}{subsubsection*.3099}
+\contentsline {paragraph}{Associating a Sequence on a SERIAL column}{723}{paragraph*.3100}
+\contentsline {paragraph}{Executing a Sequence Standalone}{723}{paragraph*.3101}
+\contentsline {paragraph}{Associating a Sequence with the MetaData}{724}{paragraph*.3102}
+\contentsline {paragraph}{Associating a Sequence as the Server Side Default}{724}{paragraph*.3103}
+\contentsline {subsubsection}{Default Objects API}{725}{subsubsection*.3104}
+\contentsline {subsection}{\numberline {3.3.4}Defining Constraints and Indexes}{727}{subsection.3.3.4}
+\contentsline {subsubsection}{Defining Foreign Keys}{727}{subsubsection*.3119}
+\contentsline {paragraph}{Creating/Dropping Foreign Key Constraints via ALTER}{728}{paragraph*.3120}
+\contentsline {paragraph}{ON UPDATE and ON DELETE}{730}{paragraph*.3121}
+\contentsline {subsubsection}{UNIQUE Constraint}{731}{subsubsection*.3122}
+\contentsline {subsubsection}{CHECK Constraint}{731}{subsubsection*.3123}
+\contentsline {subsubsection}{PRIMARY KEY Constraint}{732}{subsubsection*.3124}
+\contentsline {subsubsection}{Setting up Constraints when using the Declarative ORM Extension}{732}{subsubsection*.3125}
+\contentsline {subsubsection}{Configuring Constraint Naming Conventions}{732}{subsubsection*.3126}
+\contentsline {paragraph}{Naming CHECK Constraints}{735}{paragraph*.3127}
+\contentsline {paragraph}{Configuring Naming for Boolean, Enum, and other schema types}{736}{paragraph*.3128}
+\contentsline {subsubsection}{Constraints API}{737}{subsubsection*.3129}
+\contentsline {subsubsection}{Indexes}{748}{subsubsection*.3216}
+\contentsline {paragraph}{Functional Indexes}{749}{paragraph*.3217}
+\contentsline {subsubsection}{Index API}{749}{subsubsection*.3218}
+\contentsline {subsection}{\numberline {3.3.5}Customizing DDL}{752}{subsection.3.3.5}
+\contentsline {subsubsection}{Custom DDL}{752}{subsubsection*.3238}
+\contentsline {subsubsection}{Controlling DDL Sequences}{752}{subsubsection*.3239}
+\contentsline {subsubsection}{Using the built-in DDLElement Classes}{754}{subsubsection*.3240}
+\contentsline {subsubsection}{DDL Expression Constructs API}{755}{subsubsection*.3241}
+\contentsline {section}{\numberline {3.4}Column and Data Types}{761}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Column and Data Types}{761}{subsection.3.4.1}
+\contentsline {subsubsection}{Generic Types}{761}{subsubsection*.3280}
+\contentsline {subsubsection}{SQL Standard and Multiple Vendor Types}{767}{subsubsection*.3321}
+\contentsline {subsubsection}{Vendor-Specific Types}{773}{subsubsection*.3361}
+\contentsline {subsection}{\numberline {3.4.2}Custom Types}{774}{subsection.3.4.2}
+\contentsline {subsubsection}{Overriding Type Compilation}{774}{subsubsection*.3363}
+\contentsline {subsubsection}{Augmenting Existing Types}{774}{subsubsection*.3364}
+\contentsline {subsubsection}{TypeDecorator Recipes}{780}{subsubsection*.3400}
+\contentsline {paragraph}{Coercing Encoded Strings to Unicode}{781}{paragraph*.3401}
+\contentsline {paragraph}{Rounding Numerics}{781}{paragraph*.3402}
+\contentsline {paragraph}{Backend-agnostic GUID Type}{781}{paragraph*.3403}
+\contentsline {paragraph}{Marshal JSON Strings}{782}{paragraph*.3404}
+\contentsline {subparagraph}{Adding Mutability}{783}{subparagraph*.3405}
+\contentsline {subparagraph}{Dealing with Comparison Operations}{783}{subparagraph*.3406}
+\contentsline {subsubsection}{Replacing the Bind/Result Processing of Existing Types}{784}{subsubsection*.3407}
+\contentsline {subsubsection}{Applying SQL-level Bind/Result Processing}{784}{subsubsection*.3408}
+\contentsline {subsubsection}{Redefining and Creating New Operators}{787}{subsubsection*.3409}
+\contentsline {subsubsection}{Creating New Types}{788}{subsubsection*.3410}
+\contentsline {subsection}{\numberline {3.4.3}Base Type API}{789}{subsection.3.4.3}
+\contentsline {section}{\numberline {3.5}Engine and Connection Use}{793}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Engine Configuration}{793}{subsection.3.5.1}
+\contentsline {subsubsection}{Supported Databases}{794}{subsubsection*.3446}
+\contentsline {subsubsection}{Database Urls}{794}{subsubsection*.3447}
+\contentsline {paragraph}{PostgreSQL}{795}{paragraph*.3448}
+\contentsline {paragraph}{MySQL}{795}{paragraph*.3449}
+\contentsline {paragraph}{Oracle}{795}{paragraph*.3450}
+\contentsline {paragraph}{Microsoft SQL Server}{795}{paragraph*.3451}
+\contentsline {paragraph}{SQLite}{796}{paragraph*.3452}
+\contentsline {paragraph}{Others}{796}{paragraph*.3453}
+\contentsline {subsubsection}{Engine Creation API}{796}{subsubsection*.3454}
+\contentsline {subsubsection}{Pooling}{801}{subsubsection*.3501}
+\contentsline {subsubsection}{Custom DBAPI connect() arguments}{802}{subsubsection*.3502}
+\contentsline {subsubsection}{Configuring Logging}{802}{subsubsection*.3503}
+\contentsline {subsection}{\numberline {3.5.2}Working with Engines and Connections}{803}{subsection.3.5.2}
+\contentsline {subsubsection}{Basic Usage}{803}{subsubsection*.3504}
+\contentsline {subsubsection}{Using Transactions}{804}{subsubsection*.3505}
+\contentsline {paragraph}{Nesting of Transaction Blocks}{805}{paragraph*.3506}
+\contentsline {subsubsection}{Understanding Autocommit}{805}{subsubsection*.3507}
+\contentsline {subsubsection}{Connectionless Execution, Implicit Execution}{806}{subsubsection*.3508}
+\contentsline {subsubsection}{Translation of Schema Names}{808}{subsubsection*.3509}
+\contentsline {subsubsection}{Engine Disposal}{809}{subsubsection*.3510}
+\contentsline {subsubsection}{Using the Threadlocal Execution Strategy}{809}{subsubsection*.3511}
+\contentsline {subsubsection}{Working with Raw DBAPI Connections}{810}{subsubsection*.3512}
+\contentsline {paragraph}{Calling Stored Procedures}{811}{paragraph*.3513}
+\contentsline {paragraph}{Multiple Result Sets}{811}{paragraph*.3514}
+\contentsline {subsubsection}{Registering New Dialects}{811}{subsubsection*.3515}
+\contentsline {paragraph}{Registering Dialects In-Process}{812}{paragraph*.3516}
+\contentsline {subsubsection}{Connection / Engine API}{812}{subsubsection*.3517}
+\contentsline {subsection}{\numberline {3.5.3}Connection Pooling}{831}{subsection.3.5.3}
+\contentsline {subsubsection}{Connection Pool Configuration}{831}{subsubsection*.3627}
+\contentsline {subsubsection}{Switching Pool Implementations}{831}{subsubsection*.3628}
+\contentsline {subsubsection}{Using a Custom Connection Function}{832}{subsubsection*.3629}
+\contentsline {subsubsection}{Constructing a Pool}{832}{subsubsection*.3630}
+\contentsline {subsubsection}{Pool Events}{833}{subsubsection*.3631}
+\contentsline {subsubsection}{Dealing with Disconnects}{833}{subsubsection*.3632}
+\contentsline {paragraph}{Disconnect Handling - Pessimistic}{833}{paragraph*.3633}
+\contentsline {subparagraph}{Custom / Legacy Pessimistic Ping}{834}{subparagraph*.3634}
+\contentsline {paragraph}{Disconnect Handling - Optimistic}{835}{paragraph*.3635}
+\contentsline {subparagraph}{Setting Pool Recycle}{835}{subparagraph*.3636}
+\contentsline {paragraph}{More on Invalidation}{835}{paragraph*.3637}
+\contentsline {subsubsection}{Using Connection Pools with Multiprocessing}{836}{subsubsection*.3638}
+\contentsline {subsubsection}{API Documentation - Available Pool Implementations}{837}{subsubsection*.3639}
+\contentsline {subsubsection}{Pooling Plain DB-API Connections}{843}{subsubsection*.3689}
+\contentsline {subsection}{\numberline {3.5.4}Core Events}{844}{subsection.3.5.4}
+\contentsline {subsubsection}{Connection Pool Events}{844}{subsubsection*.3696}
+\contentsline {subsubsection}{SQL Execution and Connection Events}{849}{subsubsection*.3722}
+\contentsline {subsubsection}{Schema Events}{863}{subsubsection*.3805}
+\contentsline {section}{\numberline {3.6}Core API Basics}{868}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Events}{868}{subsection.3.6.1}
+\contentsline {subsubsection}{Event Registration}{868}{subsubsection*.3831}
+\contentsline {subsubsection}{Named Argument Styles}{868}{subsubsection*.3832}
+\contentsline {subsubsection}{Targets}{869}{subsubsection*.3833}
+\contentsline {subsubsection}{Modifiers}{870}{subsubsection*.3834}
+\contentsline {subsubsection}{Event Reference}{870}{subsubsection*.3835}
+\contentsline {subsubsection}{API Reference}{870}{subsubsection*.3836}
+\contentsline {subsection}{\numberline {3.6.2}Runtime Inspection API}{872}{subsection.3.6.2}
+\contentsline {subsubsection}{Available Inspection Targets}{872}{subsubsection*.3845}
+\contentsline {subsection}{\numberline {3.6.3}Deprecated Event Interfaces}{873}{subsection.3.6.3}
+\contentsline {subsubsection}{Execution, Connection and Cursor Events}{873}{subsubsection*.3846}
+\contentsline {subsubsection}{Connection Pool Events}{874}{subsubsection*.3860}
+\contentsline {subsection}{\numberline {3.6.4}Core Exceptions}{875}{subsection.3.6.4}
+\contentsline {subsection}{\numberline {3.6.5}Core Internals}{878}{subsection.3.6.5}
+\contentsline {chapter}{\numberline {4}Dialects}{897}{chapter.4}
+\contentsline {section}{\numberline {4.1}Included Dialects}{897}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Firebird}{897}{subsection.4.1.1}
+\contentsline {subsubsection}{Firebird Dialects}{897}{subsubsection*.4082}
+\contentsline {subsubsection}{Locking Behavior}{897}{subsubsection*.4083}
+\contentsline {subsubsection}{RETURNING support}{897}{subsubsection*.4084}
+\contentsline {subsubsection}{fdb}{898}{subsubsection*.4085}
+\contentsline {paragraph}{Arguments}{898}{paragraph*.4086}
+\contentsline {subsubsection}{kinterbasdb}{898}{subsubsection*.4087}
+\contentsline {paragraph}{Arguments}{898}{paragraph*.4088}
+\contentsline {subsection}{\numberline {4.1.2}Microsoft SQL Server}{899}{subsection.4.1.2}
+\contentsline {subsubsection}{Auto Increment Behavior}{899}{subsubsection*.4089}
+\contentsline {paragraph}{Controlling “Start” and “Increment”}{899}{paragraph*.4090}
+\contentsline {paragraph}{INSERT behavior}{900}{paragraph*.4091}
+\contentsline {subsubsection}{MAX on VARCHAR / NVARCHAR}{901}{subsubsection*.4092}
+\contentsline {subsubsection}{Collation Support}{901}{subsubsection*.4093}
+\contentsline {subsubsection}{LIMIT/OFFSET Support}{901}{subsubsection*.4094}
+\contentsline {subsubsection}{Transaction Isolation Level}{902}{subsubsection*.4095}
+\contentsline {subsubsection}{Nullability}{902}{subsubsection*.4096}
+\contentsline {subsubsection}{Date / Time Handling}{902}{subsubsection*.4097}
+\contentsline {subsubsection}{Large Text/Binary Type Deprecation}{903}{subsubsection*.4098}
+\contentsline {subsubsection}{Multipart Schema Names}{903}{subsubsection*.4099}
+\contentsline {subsubsection}{Legacy Schema Mode}{904}{subsubsection*.4100}
+\contentsline {subsubsection}{Clustered Index Support}{904}{subsubsection*.4101}
+\contentsline {subsubsection}{MSSQL-Specific Index Options}{905}{subsubsection*.4102}
+\contentsline {paragraph}{INCLUDE}{905}{paragraph*.4103}
+\contentsline {paragraph}{Index ordering}{905}{paragraph*.4104}
+\contentsline {subsubsection}{Compatibility Levels}{906}{subsubsection*.4105}
+\contentsline {subsubsection}{Triggers}{906}{subsubsection*.4106}
+\contentsline {subsubsection}{Rowcount Support / ORM Versioning}{906}{subsubsection*.4107}
+\contentsline {subsubsection}{Enabling Snapshot Isolation}{907}{subsubsection*.4108}
+\contentsline {subsubsection}{SQL Server Data Types}{907}{subsubsection*.4109}
+\contentsline {subsubsection}{PyODBC}{913}{subsubsection*.4168}
+\contentsline {paragraph}{Connecting to PyODBC}{913}{paragraph*.4169}
+\contentsline {subparagraph}{DSN Connections}{913}{subparagraph*.4170}
+\contentsline {subparagraph}{Hostname Connections}{913}{subparagraph*.4171}
+\contentsline {subparagraph}{Pass through exact Pyodbc string}{914}{subparagraph*.4172}
+\contentsline {paragraph}{Driver / Unicode Support}{914}{paragraph*.4173}
+\contentsline {paragraph}{Rowcount Support}{914}{paragraph*.4174}
+\contentsline {subsubsection}{mxODBC}{914}{subsubsection*.4175}
+\contentsline {paragraph}{Execution Modes}{914}{paragraph*.4176}
+\contentsline {subsubsection}{pymssql}{914}{subsubsection*.4177}
+\contentsline {subsubsection}{zxjdbc}{915}{subsubsection*.4178}
+\contentsline {subsubsection}{AdoDBAPI}{915}{subsubsection*.4179}
+\contentsline {subsection}{\numberline {4.1.3}MySQL}{915}{subsection.4.1.3}
+\contentsline {subsubsection}{Supported Versions and Features}{915}{subsubsection*.4180}
+\contentsline {subsubsection}{Connection Timeouts and Disconnects}{915}{subsubsection*.4181}
+\contentsline {subsubsection}{CREATE TABLE arguments including Storage Engines}{915}{subsubsection*.4182}
+\contentsline {subsubsection}{Case Sensitivity and Table Reflection}{916}{subsubsection*.4183}
+\contentsline {subsubsection}{Transaction Isolation Level}{916}{subsubsection*.4184}
+\contentsline {subsubsection}{AUTO\_INCREMENT Behavior}{917}{subsubsection*.4185}
+\contentsline {subsubsection}{Server Side Cursors}{917}{subsubsection*.4186}
+\contentsline {subsubsection}{Unicode}{917}{subsubsection*.4187}
+\contentsline {paragraph}{Charset Selection}{917}{paragraph*.4188}
+\contentsline {paragraph}{Unicode Encoding / Decoding}{918}{paragraph*.4189}
+\contentsline {subsubsection}{Ansi Quoting Style}{918}{subsubsection*.4190}
+\contentsline {subsubsection}{MySQL SQL Extensions}{919}{subsubsection*.4191}
+\contentsline {subsubsection}{INSERT…ON DUPLICATE KEY UPDATE (Upsert)}{919}{subsubsection*.4192}
+\contentsline {subsubsection}{rowcount Support}{920}{subsubsection*.4193}
+\contentsline {subsubsection}{CAST Support}{920}{subsubsection*.4194}
+\contentsline {subsubsection}{MySQL Specific Index Options}{921}{subsubsection*.4195}
+\contentsline {paragraph}{Index Length}{921}{paragraph*.4196}
+\contentsline {paragraph}{Index Prefixes}{921}{paragraph*.4197}
+\contentsline {paragraph}{Index Types}{921}{paragraph*.4198}
+\contentsline {subsubsection}{MySQL Foreign Keys}{922}{subsubsection*.4199}
+\contentsline {paragraph}{Foreign Key Arguments to Avoid}{922}{paragraph*.4200}
+\contentsline {paragraph}{Reflection of Foreign Key Constraints}{922}{paragraph*.4201}
+\contentsline {subsubsection}{MySQL Unique Constraints and Reflection}{923}{subsubsection*.4202}
+\contentsline {subsubsection}{TIMESTAMP Columns and NULL}{923}{subsubsection*.4203}
+\contentsline {subsubsection}{MySQL Data Types}{924}{subsubsection*.4204}
+\contentsline {subsubsection}{MySQL DML Constructs}{933}{subsubsection*.4368}
+\contentsline {subsubsection}{MySQL-Python}{934}{subsubsection*.4374}
+\contentsline {paragraph}{Unicode}{934}{paragraph*.4375}
+\contentsline {paragraph}{Py3K Support}{934}{paragraph*.4376}
+\contentsline {paragraph}{Using MySQLdb with Google Cloud SQL}{934}{paragraph*.4377}
+\contentsline {paragraph}{Server Side Cursors}{935}{paragraph*.4378}
+\contentsline {subsubsection}{pymysql}{935}{subsubsection*.4379}
+\contentsline {paragraph}{Unicode}{935}{paragraph*.4380}
+\contentsline {paragraph}{MySQL-Python Compatibility}{935}{paragraph*.4381}
+\contentsline {subsubsection}{MySQL-Connector}{935}{subsubsection*.4382}
+\contentsline {paragraph}{Unicode}{935}{paragraph*.4383}
+\contentsline {subsubsection}{cymysql}{935}{subsubsection*.4384}
+\contentsline {subsubsection}{OurSQL}{935}{subsubsection*.4385}
+\contentsline {paragraph}{Unicode}{935}{paragraph*.4386}
+\contentsline {subsubsection}{Google App Engine}{935}{subsubsection*.4387}
+\contentsline {paragraph}{Pooling}{935}{paragraph*.4388}
+\contentsline {subsubsection}{pyodbc}{935}{subsubsection*.4389}
+\contentsline {subsubsection}{zxjdbc}{935}{subsubsection*.4390}
+\contentsline {paragraph}{Character Sets}{935}{paragraph*.4391}
+\contentsline {subsection}{\numberline {4.1.4}Oracle}{936}{subsection.4.1.4}
+\contentsline {subsubsection}{Connect Arguments}{936}{subsubsection*.4392}
+\contentsline {subsubsection}{Auto Increment Behavior}{936}{subsubsection*.4393}
+\contentsline {subsubsection}{Identifier Casing}{936}{subsubsection*.4394}
+\contentsline {subsubsection}{LIMIT/OFFSET Support}{936}{subsubsection*.4395}
+\contentsline {subsubsection}{RETURNING Support}{937}{subsubsection*.4396}
+\contentsline {subsubsection}{ON UPDATE CASCADE}{937}{subsubsection*.4397}
+\contentsline {subsubsection}{Oracle 8 Compatibility}{937}{subsubsection*.4398}
+\contentsline {subsubsection}{Synonym/DBLINK Reflection}{938}{subsubsection*.4399}
+\contentsline {subsubsection}{Constraint Reflection}{938}{subsubsection*.4400}
+\contentsline {subsubsection}{Table names with SYSTEM/SYSAUX tablespaces}{939}{subsubsection*.4401}
+\contentsline {subsubsection}{DateTime Compatibility}{939}{subsubsection*.4402}
+\contentsline {subsubsection}{Oracle Table Options}{939}{subsubsection*.4403}
+\contentsline {subsubsection}{Oracle Specific Index Options}{939}{subsubsection*.4404}
+\contentsline {paragraph}{Bitmap Indexes}{939}{paragraph*.4405}
+\contentsline {paragraph}{Index compression}{940}{paragraph*.4406}
+\contentsline {subsubsection}{Oracle Data Types}{940}{subsubsection*.4407}
+\contentsline {subsubsection}{cx\_Oracle}{943}{subsubsection*.4433}
+\contentsline {paragraph}{Additional Connect Arguments}{943}{paragraph*.4434}
+\contentsline {paragraph}{Unicode}{943}{paragraph*.4435}
+\contentsline {paragraph}{RETURNING Support}{944}{paragraph*.4436}
+\contentsline {paragraph}{LOB Objects}{944}{paragraph*.4437}
+\contentsline {paragraph}{Two Phase Transactions Not Supported}{944}{paragraph*.4438}
+\contentsline {paragraph}{Precision Numerics}{944}{paragraph*.4439}
+\contentsline {subsubsection}{zxjdbc}{945}{subsubsection*.4440}
+\contentsline {subsection}{\numberline {4.1.5}PostgreSQL}{945}{subsection.4.1.5}
+\contentsline {subsubsection}{Sequences/SERIAL/IDENTITY}{945}{subsubsection*.4441}
+\contentsline {paragraph}{Postgresql 10 IDENTITY columns}{945}{paragraph*.4442}
+\contentsline {subsubsection}{Transaction Isolation Level}{946}{subsubsection*.4443}
+\contentsline {subsubsection}{Remote-Schema Table Introspection and PostgreSQL search\_path}{947}{subsubsection*.4444}
+\contentsline {subsubsection}{INSERT/UPDATE…RETURNING}{948}{subsubsection*.4445}
+\contentsline {subsubsection}{INSERT…ON CONFLICT (Upsert)}{949}{subsubsection*.4446}
+\contentsline {subsubsection}{Full Text Search}{952}{subsubsection*.4447}
+\contentsline {subsubsection}{FROM ONLY …}{953}{subsubsection*.4448}
+\contentsline {subsubsection}{PostgreSQL-Specific Index Options}{953}{subsubsection*.4449}
+\contentsline {paragraph}{Partial Indexes}{953}{paragraph*.4450}
+\contentsline {paragraph}{Operator Classes}{953}{paragraph*.4451}
+\contentsline {paragraph}{Index Types}{954}{paragraph*.4452}
+\contentsline {paragraph}{Index Storage Parameters}{954}{paragraph*.4453}
+\contentsline {paragraph}{Indexes with CONCURRENTLY}{954}{paragraph*.4454}
+\contentsline {subsubsection}{PostgreSQL Index Reflection}{955}{subsubsection*.4455}
+\contentsline {subsubsection}{Special Reflection Options}{955}{subsubsection*.4456}
+\contentsline {subsubsection}{PostgreSQL Table Options}{956}{subsubsection*.4465}
+\contentsline {subsubsection}{ARRAY Types}{957}{subsubsection*.4466}
+\contentsline {subsubsection}{JSON Types}{957}{subsubsection*.4467}
+\contentsline {subsubsection}{HSTORE Type}{957}{subsubsection*.4468}
+\contentsline {subsubsection}{ENUM Types}{957}{subsubsection*.4469}
+\contentsline {paragraph}{Using ENUM with ARRAY}{957}{paragraph*.4470}
+\contentsline {paragraph}{Using JSON/JSONB with ARRAY}{958}{paragraph*.4471}
+\contentsline {subsubsection}{PostgreSQL Data Types}{958}{subsubsection*.4472}
+\contentsline {paragraph}{Range Types}{969}{paragraph*.4560}
+\contentsline {subsubsection}{PostgreSQL Constraint Types}{971}{subsubsection*.4577}
+\contentsline {subsubsection}{PostgreSQL DML Constructs}{972}{subsubsection*.4586}
+\contentsline {subsubsection}{psycopg2}{973}{subsubsection*.4600}
+\contentsline {paragraph}{psycopg2 Connect Arguments}{973}{paragraph*.4601}
+\contentsline {paragraph}{Unix Domain Connections}{974}{paragraph*.4602}
+\contentsline {paragraph}{Per-Statement/Connection Execution Options}{974}{paragraph*.4603}
+\contentsline {paragraph}{Psycopg2 Batch Mode (Fast Execution)}{975}{paragraph*.4604}
+\contentsline {paragraph}{Unicode with Psycopg2}{975}{paragraph*.4605}
+\contentsline {subparagraph}{Disabling Native Unicode}{976}{subparagraph*.4606}
+\contentsline {paragraph}{Bound Parameter Styles}{976}{paragraph*.4607}
+\contentsline {paragraph}{Transactions}{977}{paragraph*.4608}
+\contentsline {paragraph}{Psycopg2 Transaction Isolation Level}{977}{paragraph*.4609}
+\contentsline {paragraph}{NOTICE logging}{977}{paragraph*.4610}
+\contentsline {paragraph}{HSTORE type}{977}{paragraph*.4611}
+\contentsline {subsubsection}{pg8000}{978}{subsubsection*.4612}
+\contentsline {paragraph}{Unicode}{978}{paragraph*.4613}
+\contentsline {paragraph}{pg8000 Transaction Isolation Level}{978}{paragraph*.4614}
+\contentsline {subsubsection}{psycopg2cffi}{978}{subsubsection*.4615}
+\contentsline {subsubsection}{py-postgresql}{979}{subsubsection*.4616}
+\contentsline {subsubsection}{pygresql}{979}{subsubsection*.4617}
+\contentsline {subsubsection}{zxjdbc}{979}{subsubsection*.4618}
+\contentsline {subsection}{\numberline {4.1.6}SQLite}{979}{subsection.4.1.6}
+\contentsline {subsubsection}{Date and Time Types}{979}{subsubsection*.4619}
+\contentsline {paragraph}{Ensuring Text affinity}{979}{paragraph*.4620}
+\contentsline {subsubsection}{SQLite Auto Incrementing Behavior}{979}{subsubsection*.4621}
+\contentsline {paragraph}{Using the AUTOINCREMENT Keyword}{979}{paragraph*.4622}
+\contentsline {paragraph}{Allowing autoincrement behavior SQLAlchemy types other than Integer/INTEGER}{979}{paragraph*.4623}
+\contentsline {subsubsection}{Database Locking Behavior / Concurrency}{980}{subsubsection*.4624}
+\contentsline {subsubsection}{Transaction Isolation Level}{981}{subsubsection*.4625}
+\contentsline {subsubsection}{SAVEPOINT Support}{981}{subsubsection*.4626}
+\contentsline {subsubsection}{Transactional DDL}{981}{subsubsection*.4627}
+\contentsline {subsubsection}{Foreign Key Support}{982}{subsubsection*.4628}
+\contentsline {subsubsection}{Type Reflection}{982}{subsubsection*.4629}
+\contentsline {subsubsection}{Partial Indexes}{983}{subsubsection*.4630}
+\contentsline {subsubsection}{Dotted Column Names}{983}{subsubsection*.4631}
+\contentsline {subsubsection}{SQLite Data Types}{985}{subsubsection*.4632}
+\contentsline {subsubsection}{Pysqlite}{986}{subsubsection*.4643}
+\contentsline {paragraph}{Driver}{986}{paragraph*.4644}
+\contentsline {paragraph}{Connect Strings}{987}{paragraph*.4645}
+\contentsline {paragraph}{Compatibility with sqlite3 “native” date and datetime types}{987}{paragraph*.4646}
+\contentsline {paragraph}{Threading/Pooling Behavior}{988}{paragraph*.4647}
+\contentsline {subparagraph}{Using a Memory Database in Multiple Threads}{988}{subparagraph*.4648}
+\contentsline {subparagraph}{Using Temporary Tables with SQLite}{988}{subparagraph*.4649}
+\contentsline {paragraph}{Unicode}{989}{paragraph*.4650}
+\contentsline {paragraph}{Serializable isolation / Savepoints / Transactional DDL}{989}{paragraph*.4651}
+\contentsline {subsubsection}{Pysqlcipher}{990}{subsubsection*.4652}
+\contentsline {paragraph}{Driver}{990}{paragraph*.4653}
+\contentsline {paragraph}{Connect Strings}{990}{paragraph*.4654}
+\contentsline {paragraph}{Pooling Behavior}{990}{paragraph*.4655}
+\contentsline {subsection}{\numberline {4.1.7}Sybase}{991}{subsection.4.1.7}
+\contentsline {subsubsection}{python-sybase}{991}{subsubsection*.4656}
+\contentsline {paragraph}{Unicode Support}{991}{paragraph*.4657}
+\contentsline {subsubsection}{pyodbc}{991}{subsubsection*.4658}
+\contentsline {paragraph}{Unicode Support}{991}{paragraph*.4659}
+\contentsline {subsubsection}{mxodbc}{991}{subsubsection*.4660}
+\contentsline {section}{\numberline {4.2}External Dialects}{991}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Production Ready}{991}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Experimental / Incomplete}{992}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Attic}{992}{subsection.4.2.3}
+\contentsline {chapter}{\numberline {5}Frequently Asked Questions}{993}{chapter.5}
+\contentsline {section}{\numberline {5.1}Connections / Engines}{993}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}How do I configure logging?}{993}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}How do I pool database connections? Are my connections pooled?}{993}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}How do I pass custom connect arguments to my database API?}{993}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}“MySQL Server has gone away”}{994}{subsection.5.1.4}
+\contentsline {subsection}{\numberline {5.1.5}“Commands out of sync; you can’t run this command now” / “This result object does not return rows. It has been closed automatically”}{994}{subsection.5.1.5}
+\contentsline {subsection}{\numberline {5.1.6}Why does SQLAlchemy issue so many ROLLBACKs?}{995}{subsection.5.1.6}
+\contentsline {subsubsection}{I’m on MyISAM - how do I turn it off?}{995}{subsubsection*.4672}
+\contentsline {subsubsection}{I’m on SQL Server - how do I turn those ROLLBACKs into COMMITs?}{996}{subsubsection*.4673}
+\contentsline {subsection}{\numberline {5.1.7}I am using multiple connections with a SQLite database (typically to test transaction operation), and my test program is not working!}{996}{subsection.5.1.7}
+\contentsline {subsection}{\numberline {5.1.8}How do I get at the raw DBAPI connection when using an Engine?}{996}{subsection.5.1.8}
+\contentsline {subsection}{\numberline {5.1.9}How do I use engines / connections / sessions with Python multiprocessing, or os.fork()?}{996}{subsection.5.1.9}
+\contentsline {section}{\numberline {5.2}MetaData / Schema}{998}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}My program is hanging when I say \sphinxstyleliteralintitle {table.drop()} / \sphinxstyleliteralintitle {metadata.drop\_all()}}{998}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Does SQLAlchemy support ALTER TABLE, CREATE VIEW, CREATE TRIGGER, Schema Upgrade Functionality?}{998}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}How can I sort Table objects in order of their dependency?}{998}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {5.2.4}How can I get the CREATE TABLE/ DROP TABLE output as a string?}{999}{subsection.5.2.4}
+\contentsline {subsection}{\numberline {5.2.5}How can I subclass Table/Column to provide certain behaviors/configurations?}{999}{subsection.5.2.5}
+\contentsline {section}{\numberline {5.3}SQL Expressions}{999}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}How do I render SQL expressions as strings, possibly with bound parameters inlined?}{999}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}I’m using op() to generate a custom operator and my parenthesis are not coming out correctly}{1001}{subsection.5.3.2}
+\contentsline {subsubsection}{Why are the parentheses rules like this?}{1001}{subsubsection*.4682}
+\contentsline {section}{\numberline {5.4}ORM Configuration}{1002}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}How do I map a table that has no primary key?}{1002}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.2}How do I configure a Column that is a Python reserved word or similar?}{1003}{subsection.5.4.2}
+\contentsline {subsection}{\numberline {5.4.3}How do I get a list of all columns, relationships, mapped attributes, etc. given a mapped class?}{1003}{subsection.5.4.3}
+\contentsline {subsection}{\numberline {5.4.4}I’m getting a warning or error about “Implicitly combining column X under attribute Y”}{1004}{subsection.5.4.4}
+\contentsline {subsection}{\numberline {5.4.5}I’m using Declarative and setting primaryjoin/secondaryjoin using an \sphinxstyleliteralintitle {and\_()} or \sphinxstyleliteralintitle {or\_()}, and I am getting an error message about foreign keys.}{1005}{subsection.5.4.5}
+\contentsline {subsection}{\numberline {5.4.6}Why is \sphinxstyleliteralintitle {ORDER BY} required with \sphinxstyleliteralintitle {LIMIT} (especially with \sphinxstyleliteralintitle {subqueryload()})?}{1006}{subsection.5.4.6}
+\contentsline {section}{\numberline {5.5}Performance}{1007}{section.5.5}
+\contentsline {subsection}{\numberline {5.5.1}How can I profile a SQLAlchemy powered application?}{1007}{subsection.5.5.1}
+\contentsline {subsubsection}{Query Profiling}{1007}{subsubsection*.4696}
+\contentsline {subsubsection}{Code Profiling}{1008}{subsubsection*.4697}
+\contentsline {subsubsection}{Execution Slowness}{1009}{subsubsection*.4698}
+\contentsline {subsubsection}{Result Fetching Slowness - Core}{1009}{subsubsection*.4699}
+\contentsline {subsubsection}{Result Fetching Slowness - ORM}{1010}{subsubsection*.4700}
+\contentsline {subsection}{\numberline {5.5.2}I’m inserting 400,000 rows with the ORM and it’s really slow!}{1011}{subsection.5.5.2}
+\contentsline {section}{\numberline {5.6}Sessions / Queries}{1014}{section.5.6}
+\contentsline {subsection}{\numberline {5.6.1}I’m re-loading data with my Session but it isn’t seeing changes that I committed elsewhere}{1015}{subsection.5.6.1}
+\contentsline {subsection}{\numberline {5.6.2}“This Session’s transaction has been rolled back due to a previous exception during flush.” (or similar)}{1016}{subsection.5.6.2}
+\contentsline {subsubsection}{But why does flush() insist on issuing a ROLLBACK?}{1016}{subsubsection*.4717}
+\contentsline {subsubsection}{But why isn’t the one automatic call to ROLLBACK enough? Why must I ROLLBACK again?}{1017}{subsubsection*.4718}
+\contentsline {subsection}{\numberline {5.6.3}How do I make a Query that always adds a certain filter to every query?}{1018}{subsection.5.6.3}
+\contentsline {subsection}{\numberline {5.6.4}I’ve created a mapping against an Outer Join, and while the query returns rows, no objects are returned. Why not?}{1018}{subsection.5.6.4}
+\contentsline {subsection}{\numberline {5.6.5}I’m using \sphinxstyleliteralintitle {joinedload()} or \sphinxstyleliteralintitle {lazy=False} to create a JOIN/OUTER JOIN and SQLAlchemy is not constructing the correct query when I try to add a WHERE, ORDER BY, LIMIT, etc. (which relies upon the (OUTER) JOIN)}{1018}{subsection.5.6.5}
+\contentsline {subsection}{\numberline {5.6.6}Query has no \sphinxstyleliteralintitle {\_\_len\_\_()}, why not?}{1018}{subsection.5.6.6}
+\contentsline {subsection}{\numberline {5.6.7}How Do I use Textual SQL with ORM Queries?}{1019}{subsection.5.6.7}
+\contentsline {subsection}{\numberline {5.6.8}I’m calling \sphinxstyleliteralintitle {Session.delete(myobject)} and it isn’t removed from the parent collection!}{1019}{subsection.5.6.8}
+\contentsline {subsection}{\numberline {5.6.9}why isn’t my \sphinxstyleliteralintitle {\_\_init\_\_()} called when I load objects?}{1019}{subsection.5.6.9}
+\contentsline {subsection}{\numberline {5.6.10}how do I use ON DELETE CASCADE with SA’s ORM?}{1019}{subsection.5.6.10}
+\contentsline {subsection}{\numberline {5.6.11}I set the “foo\_id” attribute on my instance to “7”, but the “foo” attribute is still \sphinxstyleliteralintitle {None} - shouldn’t it have loaded Foo with id \#7?}{1019}{subsection.5.6.11}
+\contentsline {subsection}{\numberline {5.6.12}How do I walk all objects that are related to a given object?}{1021}{subsection.5.6.12}
+\contentsline {subsection}{\numberline {5.6.13}Is there a way to automagically have only unique keywords (or other kinds of objects) without doing a query for the keyword and getting a reference to the row containing that keyword?}{1022}{subsection.5.6.13}
+\contentsline {subsection}{\numberline {5.6.14}Why does post\_update emit UPDATE in addition to the first UPDATE?}{1022}{subsection.5.6.14}
+\contentsline {chapter}{\numberline {6}Error Messages}{1023}{chapter.6}
+\contentsline {section}{\numberline {6.1}Connections and Transactions}{1023}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}QueuePool limit of size \textless {}x\textgreater {} overflow \textless {}y\textgreater {} reached, connection timed out, timeout \textless {}z\textgreater {}}{1023}{subsection.6.1.1}
+\contentsline {section}{\numberline {6.2}DBAPI Errors}{1025}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}InterfaceError}{1025}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}DatabaseError}{1025}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}DataError}{1026}{subsection.6.2.3}
+\contentsline {subsection}{\numberline {6.2.4}OperationalError}{1026}{subsection.6.2.4}
+\contentsline {subsection}{\numberline {6.2.5}IntegrityError}{1026}{subsection.6.2.5}
+\contentsline {subsection}{\numberline {6.2.6}InternalError}{1026}{subsection.6.2.6}
+\contentsline {subsection}{\numberline {6.2.7}ProgrammingError}{1026}{subsection.6.2.7}
+\contentsline {subsection}{\numberline {6.2.8}NotSupportedError}{1026}{subsection.6.2.8}
+\contentsline {section}{\numberline {6.3}SQL Expression Language}{1027}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}This Compiled object is not bound to any Engine or Connection}{1027}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}A value is required for bind parameter \textless {}x\textgreater {} (in parameter group \textless {}y\textgreater {})}{1027}{subsection.6.3.2}
+\contentsline {section}{\numberline {6.4}Object Relational Mapping}{1028}{section.6.4}
+\contentsline {subsection}{\numberline {6.4.1}Parent instance \textless {}x\textgreater {} is not bound to a Session; (lazy load/deferred load/refresh/etc.) operation cannot proceed}{1028}{subsection.6.4.1}
+\contentsline {section}{\numberline {6.5}Core Exception Classes}{1029}{section.6.5}
+\contentsline {section}{\numberline {6.6}ORM Exception Classes}{1029}{section.6.6}
+\contentsline {chapter}{\numberline {7}Glossary}{1031}{chapter.7}
+\contentsline {chapter}{Python Module Index}{1045}{section*.4788}

@@ -22,3 +22,5 @@ sqlnet.log
 /.cache/
 *.sw[o,p]
 .idea/
+!/doc/build/output/
+!/build/
